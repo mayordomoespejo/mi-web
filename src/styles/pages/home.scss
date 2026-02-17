@@ -1,6 +1,182 @@
 @use "../variables" as *;
 @use "../mixins" as *;
 
+.home {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+// Intro: ocupa todo el alto disponible (viewport − header) pero no más (min + max iguales).
+// --site-header-height lo define Layout (JS). Fallback 100vh para navegadores sin dvh.
+// flex-shrink: 0 para que no se encoja.
+
+.home__intro {
+  flex-shrink: 0;
+  min-height: calc(100vh - var(--site-header-height, 0px));
+  max-height: calc(100vh - var(--site-header-height, 0px));
+  min-height: calc(100dvh - var(--site-header-height, 0px));
+  max-height: calc(100dvh - var(--site-header-height, 0px));
+  display: flex;
+  flex-direction: column;
+  padding-bottom: calc(#{$space-7} * 2);
+}
+
+// Contenedor que ocupa el alto disponible y coloca el texto de la bio abajo a la derecha
+.home__intro-inner {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.home__experience {
+  position: relative;
+  flex-shrink: 0;
+  min-height: calc(100dvh - var(--site-header-height, 0px) + 84.75px + #{$space-5});
+  min-height: calc(100vh - var(--site-header-height, 0px) + 84.75px + #{$space-5});
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; // Centra el contenido verticalmente en la parte visible
+  align-items: center; // Centra el contenido horizontalmente
+  // Al hacer scroll a esta sección (ancla Experiencia), queda justo bajo WaveBars (sin stepped panel ni gap)
+  scroll-margin-top: var(--site-wavebar-height, 0px);
+  // Fondo a ancho completo; el contenido respeta el ancho de main
+  &::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
+    top: 0;
+    bottom: 0;
+    background-color: $color-secondary;
+    z-index: -1;
+  }
+}
+
+.home__education {
+  position: relative;
+  flex-shrink: 0;
+  min-height: calc(100dvh - var(--site-header-height, 0px) + 84.75px + #{$space-5});
+  min-height: calc(100vh - var(--site-header-height, 0px) + 84.75px + #{$space-5});
+  width: 100%;
+  box-sizing: border-box;
+  padding-inline: $layout-padding-horizontal;
+  padding-bottom: calc(#{$space-7} * 2); // mismo que intro
+  // Al hacer scroll a esta sección (ancla Educación), queda justo bajo WaveBars (sin stepped panel ni gap)
+  scroll-margin-top: var(--site-wavebar-height, 0px);
+  // Fondo a ancho completo; el contenido respeta el ancho de main
+  &::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
+    top: 0;
+    bottom: 0;
+    background-color: $color-bg;
+    z-index: -1;
+  }
+}
+
+// ─── Contenido de experiencia en home (mismo ancho máx. que intro, fuente secundaria) ───
+// Centrado verticalmente en la parte visible; el contenido ocupa todo el ancho del padre.
+.home-exp {
+  width: 100%;
+  padding-block: $space-12 $space-10;
+  font-family: $font-code;
+
+  &__section-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: $color-quaternary;
+    margin: 0 0 $space-10;
+  }
+
+  &__job {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: $space-8;
+
+    & + & {
+      margin-top: $space-12;
+    }
+  }
+
+  // Columna izquierda: fechas, empresa, rol — ancho limitado a 400px
+  &__job-info {
+    flex: 0 1 475px;
+    max-width: 575px;
+    min-width: 0;
+  }
+
+  // Columna derecha: rueda ocupa todo el espacio restante
+  &__job-wheel {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    margin-bottom: $space-3;
+  }
+
+  &__dates,
+  &__location {
+    font-size: 0.875rem;
+    color: $color-quaternary;
+  }
+
+  &__sep {
+    font-size: 0.875rem;
+    color: $color-quaternary;
+  }
+
+  &__company {
+    font-size: clamp(1.25rem, 2.5vw, 1.6rem);
+    font-weight: 700;
+    color: $color-text;
+    margin: 0 0 $space-2;
+    line-height: 1.2;
+  }
+
+  &__role {
+    font-family: $font-main;
+    font-size: 0.875rem;
+    color: $color-quaternary;
+    margin: 0;
+  }
+
+  &__state {
+    font-size: 0.875rem; // mismo tamaño que fechas y separador
+    color: $color-quaternary;
+  }
+}
+
+// Scroll-reveal: los elementos con [data-reveal] empiezan ocultos y suben al entrar en viewport.
+.home-exp [data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+  transition-delay: var(--delay, 0s);
+
+  &.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 .home__hero {
   margin-bottom: $space-8;
 }
@@ -38,4 +214,84 @@
   padding: $space-2 $space-4;
   background: $color-secondary;
   font-size: 0.92rem;
+}
+
+.home__profile-bio {
+  margin-top: auto;
+  padding-top: $space-8;
+  max-width: 42rem;
+  margin-left: auto;
+  margin-right: 0;
+  text-align: right;
+  color: $color-muted;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  cursor: pointer; // Clic para quitar las marcas de "leído"
+}
+
+// Cada palabra envuelta en span para hover con fondo
+.home__profile-bio-word {
+  border-radius: 2px;
+  transition: background-color 0.15s ease;
+}
+
+.home__profile-bio-word:hover,
+.home__profile-bio-word--read {
+  background-color: $color-secondary;
+}
+
+// Palabras destacadas en el perfil (Desarrollador Frontend, React, React Native)
+.home__profile-bio-highlight {
+  color: $color-text;
+  font-weight: 600;
+}
+
+// Animación CTA: rebote suave que se repite de vez en cuando
+@keyframes home__scroll-down-bounce {
+  0%,
+  92%,
+  100% {
+    transform: translateY(0);
+  }
+  94% {
+    transform: translateY(-5px);
+  }
+  96% {
+    transform: translateY(0);
+  }
+  98% {
+    transform: translateY(-2px);
+  }
+}
+
+// Botón flecha abajo: flotante abajo a la derecha, borde color texto, más pequeño, rebote CTA
+.home__scroll-down {
+  position: fixed;
+  bottom: $space-6;
+  right: $layout-padding-horizontal;
+  padding: $space-1;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  background: transparent;
+  color: $color-text;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  animation: home__scroll-down-bounce 5s ease-in-out infinite;
+
+  &:hover {
+    opacity: $hover-opacity-soft;
+    transform: translateY(2px);
+    animation: none; // En hover dejamos de rebotar y usamos solo el transform
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-text;
+    outline-offset: 2px;
+  }
+}
+
+.home__scroll-down-icon {
+  display: block;
+  width: 1.5rem;
+  height: 1.5rem;
 }

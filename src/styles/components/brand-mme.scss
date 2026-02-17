@@ -1,6 +1,6 @@
 @use "../variables" as *;
 
-// Brand "mme": cada letra es la inicial; al hover la palabra se despliega a la derecha
+// Brand "mme": cada letra es la inicial; al hacer clic se despliega la palabra. Es un botón, no un enlace.
 .brand-mme {
   display: inline-flex;
   align-items: flex-end;
@@ -10,6 +10,12 @@
   color: $color-text;
   text-decoration: none;
   transition: opacity 0.2s ease;
+  // Reset estilos nativos del botón para que se vea como el brand
+  border: none;
+  padding: 0;
+  background: none;
+  font-family: inherit;
+  cursor: pointer;
 
   &:hover {
     text-decoration: none;
@@ -45,8 +51,8 @@
     opacity 0.2s ease,
     padding-left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 
-  .brand-mme:hover &,
-  .brand-mme:focus-visible & {
+  // Desplegado al hacer clic (clase .brand-mme--expanded), no con hover.
+  .brand-mme--expanded & {
     max-width: 12ch;
     opacity: 1;
     padding-left: 0.12em;

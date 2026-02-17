@@ -1,27 +1,22 @@
 # Portfolio Web - Miguel Mayordomo
 
-Portfolio profesional construido con React + Vite, con navegación multipágina, consumo de datos locales simulados vía Axios y gestión de estado servidor con TanStack React Query.
+Portfolio profesional construido con React + Vite, con navegación multipágina, datos locales desde JSON (mocks) y gestión de estado con TanStack React Query.
 
 ## Stack
 
 - React + Vite (JavaScript)
 - `react-router-dom`
 - `@tanstack/react-query`
-- `axios`
 - `sass` (SCSS)
 - `react-hot-toast`
 
 ## Características
 
 - Layout general con `Navbar` responsive + `Outlet` + `Footer`
-- Páginas: Home, Experience, Education, Contact, NotFound (404)
-- API local simulada con JSON en `src/mocks`
-- 3 queries con React Query:
-  - `getExperience()`
-  - `getEducation()`
-  - `getProfileSummary()`
-- Estados de UI en queries: loading, error, empty
-- Botón `Refrescar` en Experience y Education con `invalidateQueries`
+- Páginas: Home, Contact, NotFound (404)
+- Datos desde JSON en `src/mocks` (sin API real)
+- Servicio `profileApi.js` con `getExperience()`, `getEducation()`, `getProfileSummary()` (datos locales)
+- React Query para experiencia en Home (`getExperience`)
 - Modal reutilizable accesible:
   - overlay
   - cierre con `ESC`
@@ -43,19 +38,22 @@ src/
       Layout.jsx
       Navbar.jsx
       Footer.jsx
+      WaveBars.jsx
+      BrandMme.jsx
+      SteppedPanel.jsx
+      LanguageSwitcher.jsx
+    HomeExperienceSection.jsx
     UI/
       Button.jsx
       Card.jsx
       Modal.jsx
       Tooltip.jsx
+      WheelPicker.jsx
   pages/
     Home.jsx
-    Experience.jsx
-    Education.jsx
     Contact.jsx
     NotFound.jsx
   services/
-    apiClient.js
     profileApi.js
   mocks/
     experience.json

@@ -1,8 +1,10 @@
 import { useTranslation } from "react-i18next";
 
 /**
- * Botones para cambiar idioma (es / en).
- * onLanguageChange opcional: se llama al cambiar (p. ej. cerrar menú en navbar).
+ * Botones para cambiar idioma (es/en). Opcionalmente notifica al cambiar (p. ej. cerrar menú).
+ * @param {Object} props
+ * @param {(() => void)|undefined} props.onLanguageChange - Callback opcional al cambiar de idioma.
+ * @returns {JSX.Element}
  */
 export default function LanguageSwitcher({ onLanguageChange }) {
   const { t, i18n } = useTranslation();

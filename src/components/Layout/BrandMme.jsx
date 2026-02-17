@@ -1,19 +1,19 @@
-import { NavLink } from "react-router-dom";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 /**
- * Brand "mme": enlace a home con iniciales que al hover/focus despliegan
- * la palabra completa (m→iguel, m→ayordomo, e→spejo).
- * Acepta onClick opcional (p. ej. cerrar menú + scroll en navbar).
+ * Brand "mme": iniciales que al hacer clic despliegan/pliegan la palabra completa. No es un enlace.
+ * @param {Object} props
+ * @param {((e: React.MouseEvent) => void)|undefined} props.onClick - Callback opcional al hacer clic (p. ej. cerrar menú y scroll).
+ * @returns {JSX.Element}
  */
 export default function BrandMme({ onClick }) {
   const { t } = useTranslation();
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const handleClick = (e) => {
+    setIsExpanded((prev) => !prev);
     if (onClick) onClick(e);
-    else {
-      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-    }
   };
 
   const brandCells = [
@@ -23,11 +23,12 @@ export default function BrandMme({ onClick }) {
   ];
 
   return (
-    <NavLink
-      to="/"
-      className="brand-mme"
+    <button
+      type="button"
+      className={`brand-mme ${isExpanded ? "brand-mme--expanded" : ""}`}
       onClick={handleClick}
       aria-label={t("common.brandName").toLowerCase()}
+      aria-expanded={isExpanded}
     >
       {brandCells.map((cell, i) => (
         <span
@@ -46,6 +47,6 @@ export default function BrandMme({ onClick }) {
           )}
         </span>
       ))}
-    </NavLink>
+    </button>
   );
 }

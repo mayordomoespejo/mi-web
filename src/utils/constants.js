@@ -1,3 +1,7 @@
+/**
+ * Enlaces de contacto del autor (email, GitHub, LinkedIn).
+ * @type {{ emailAddress: string; email: string; github: string; linkedin: string }}
+ */
 export const CONTACT_LINKS = {
   emailAddress: "miguelmayordomoespejo@gmail.com",
   email: "mailto:miguelmayordomoespejo@gmail.com",

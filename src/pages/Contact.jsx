@@ -7,6 +7,10 @@ import Modal from "../components/UI/Modal";
 import { copyToClipboard } from "../utils/clipboard";
 import { CONTACT_LINKS } from "../utils/constants";
 
+/**
+ * Página de contacto: enlaces (email, GitHub, LinkedIn), copiar email y modal con datos.
+ * @returns {JSX.Element}
+ */
 export default function Contact() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { t } = useTranslation();
@@ -21,17 +25,18 @@ export default function Contact() {
   };
 
   return (
-    <section className="contact">
-      <h1>{t("contact.title")}</h1>
+    <div className="container">
+      <section className="contact">
+        <h1>{t("contact.title")}</h1>
       <Card className="contact__card">
         <a href={CONTACT_LINKS.email} target="_blank" rel="noreferrer">
           {t("contact.email")}
         </a>
         <a href={CONTACT_LINKS.github} target="_blank" rel="noreferrer">
-          GitHub
+          {t("contact.github")}
         </a>
         <a href={CONTACT_LINKS.linkedin} target="_blank" rel="noreferrer">
-          LinkedIn
+          {t("contact.linkedin")}
         </a>
       </Card>
 
@@ -54,6 +59,7 @@ export default function Contact() {
           </a>
         </p>
       </Modal>
-    </section>
+      </section>
+    </div>
   );
 }

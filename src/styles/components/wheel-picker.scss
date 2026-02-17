@@ -1,0 +1,73 @@
+@use "../variables" as *;
+
+// ─── Contenedor / ventana de la rueda ────────────────────────────────────────
+// 160px: el ítem activo queda centrado (80px) y los vecinos ±1 asoman
+// parcialmente; los ±2 quedan fuera del clip de overflow:hidden.
+.wheel-picker {
+  position: relative;
+  height: 160px;
+  overflow: hidden;
+  outline: none;
+  cursor: ns-resize;
+}
+
+// ─── Cada ítem simulado en la superficie del cilindro ────────────────────────
+.wheel-picker__item {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 44px; // = ITEM_H en WheelPicker.jsx
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  font-size: 0.85rem;
+  line-height: 1.3;
+  padding-right: $space-3;
+  transition:
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity   0.3s ease;
+  will-change: transform, opacity;
+}
+
+.wheel-picker__bullet {
+  color: $color-primary;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+// ─── Degradados: ocultan los vecinos dejando solo el ítem activo visible ──────
+// Tamaño generoso (60px) para que el fade empiece bien antes del ítem vecino.
+.wheel-picker__fade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 60px;
+  pointer-events: none;
+  z-index: 2;
+
+  &--top {
+    top: 0;
+    background: linear-gradient(to bottom, $color-secondary, transparent);
+  }
+
+  &--bottom {
+    bottom: 0;
+    background: linear-gradient(to top, $color-secondary, transparent);
+  }
+}
+
+// ─── Líneas que enmarcan el ítem seleccionado (estilo iOS picker) ─────────────
+.wheel-picker__selector {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 44px;
+  transform: translateY(-50%);
+  border-top:    1px solid $color-quaternary;
+  border-bottom: 1px solid $color-quaternary;
+  pointer-events: none;
+  z-index: 3;
+}

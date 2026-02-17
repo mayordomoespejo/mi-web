@@ -1,11 +1,40 @@
 @use "../variables" as *;
 @use "../mixins" as *;
 
-/* Ocupa al menos el alto del viewport; en móvil 100dvh evita que la barra del navegador fuerce scroll */
+/* Variables rellenadas por Layout (JS): header y stepped panel para min-height de las secciones home. */
 .site-shell {
   min-height: 100vh;
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
+  gap: 0;
+  overflow-x: hidden;
+  --site-header-height: 0px;
+  --site-wavebar-height: 0px;
+  --site-stepped-panel-height: 84.75px;
+  /* Espacio para el header fijo; evita que el contenido quede oculto bajo la cabecera */
+  padding-top: var(--site-header-height);
+}
+
+/* Header clavado en la parte superior (fixed) en todos los tamaños de pantalla. */
+.site-hero {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
   gap: $space-5;
+  /* Fondo transparente; el panel (stepped-panel__inner) aporta su propio fondo */
+  background: transparent;
+}
+
+/* Cuando la sección Experiencia está en vista: WaveBars y sus actions usan fondo secondary */
+.site-hero__wavebar--experience .wave-bars {
+  background: $color-secondary;
+}
+
+.site-hero__wavebar--experience .wave-bars__block {
+  background: $color-secondary;
 }

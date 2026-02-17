@@ -8,17 +8,8 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const { t, i18n } = useTranslation();
 
-  // Experiencia y Formación como un solo bloque de navegación
   const links = [
     { to: "/", label: t("navbar.home") },
-    {
-      group: true,
-      ariaLabel: t("navbar.experienceAndEducation"),
-      items: [
-        { to: "/experience", label: t("navbar.experience") },
-        { to: "/education", label: t("navbar.education") }
-      ]
-    },
     { to: "/contact", label: t("navbar.contact") }
   ];
 
@@ -42,49 +33,18 @@ export default function Navbar() {
         </button>
 
         <nav className={`navbar__links ${isOpen ? "is-open" : ""}`}>
-          {links.map((link) =>
-            link.group ? (
-              <div
-                key="experience-education"
-                className="navbar__link-group"
-                role="group"
-                aria-label={link.ariaLabel}
-              >
-                {link.items.map((item, idx) => (
-                  <span key={item.to} className="navbar__link-group-item">
-                    {idx > 0 && (
-                      <span
-                        className="navbar__link-group-sep"
-                        aria-hidden="true"
-                      >
-                        ·
-                      </span>
-                    )}
-                    <NavLink
-                      to={item.to}
-                      onClick={closeMenu}
-                      className={({ isActive }) =>
-                        `navbar__link ${isActive ? "is-active" : ""}`
-                      }
-                    >
-                      {item.label}
-                    </NavLink>
-                  </span>
-                ))}
-              </div>
-            ) : (
-              <NavLink
-                key={link.to}
-                to={link.to}
-                onClick={closeMenu}
-                className={({ isActive }) =>
-                  `navbar__link ${isActive ? "is-active" : ""}`
-                }
-              >
-                {link.label}
-              </NavLink>
-            )
-          )}
+          {links.map((link) => (
+            <NavLink
+              key={link.to}
+              to={link.to}
+              onClick={closeMenu}
+              className={({ isActive }) =>
+                `navbar__link ${isActive ? "is-active" : ""}`
+              }
+            >
+              {link.label}
+            </NavLink>
+          ))}
           <LanguageSwitcher onLanguageChange={closeMenu} />
         </nav>
       </div>

@@ -2,6 +2,10 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Button from "../components/UI/Button";
 
+/**
+ * Página mostrada cuando la ruta no existe; permite volver al inicio.
+ * @returns {JSX.Element}
+ */
 export default function NotFound() {
   const navigate = useNavigate();
   const { t } = useTranslation();

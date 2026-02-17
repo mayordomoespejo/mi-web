@@ -1,16 +1,28 @@
-import apiClient from "./apiClient";
+// Datos desde mocks locales (sin API real ni simulaciones de red)
+import experience from "../mocks/experience.json";
+import education from "../mocks/education.json";
+import profile from "../mocks/profile.json";
 
-export async function getExperience() {
-  const response = await apiClient.get("/experience");
-  return response.data;
+/**
+ * Devuelve la lista de experiencia laboral.
+ * @returns {Promise<Array<{ id: string; company: string; role: string; roleKey?: string; startDate: string; endDate: string; responsibilities?: string[]; responsibilityKey?: string }>>}
+ */
+export function getExperience() {
+  return Promise.resolve(experience);
 }
 
-export async function getEducation() {
-  const response = await apiClient.get("/education");
-  return response.data;
+/**
+ * Devuelve la lista de formación académica.
+ * @returns {Promise<Array<{ id: string; title: string; center: string; dates: string }>>}
+ */
+export function getEducation() {
+  return Promise.resolve(education);
 }
 
-export async function getProfileSummary() {
-  const response = await apiClient.get("/profile-summary");
-  return response.data;
+/**
+ * Devuelve el resumen del perfil (nombre, rol, bio, stack).
+ * @returns {Promise<{ name: string; role: string; bio: string; stack: string[] }>}
+ */
+export function getProfileSummary() {
+  return Promise.resolve(profile);
 }

@@ -12,9 +12,8 @@
 @use "./components/modal";
 @use "./components/tooltip";
 @use "./components/welcome-screen";
+@use "./components/wheel-picker";
 @use "./pages/home";
-@use "./pages/experience";
-@use "./pages/education";
 @use "./pages/contact";
 @use "./pages/notfound";
 
@@ -24,7 +23,6 @@
   box-sizing: border-box;
 }
 
-// Cadena de altura para que la página ocupe al menos el viewport sin forzar scroll
 html {
   min-height: 100%;
   overflow-x: hidden;
@@ -36,6 +34,7 @@ body {
   font-family: $font-main;
   background: $color-bg;
   color: $color-text;
+  overflow-x: hidden;
 }
 
 #root {
@@ -83,20 +82,21 @@ ul {
   }
 }
 
-/* Crece para llenar el espacio entre el contenido superior y el footer; evita scroll cuando hay poco contenido */
+// main es ancho completo para permitir fondos full-bleed en home sin overflow (100vw provocaba barra roja).
 .main-content {
   flex: 1;
   min-height: 0;
-@media (max-width: 767px) {
-  flex: 1;
-  min-height: 0;
-  padding-inline: $layout-padding-horizontal;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+
+  @media (max-width: 767px) {
+    padding-inline: $layout-padding-horizontal;
   }
-  
+
   @include up(md) {
     width: 100%;
-    max-width: 1100px;
-    margin: 0 auto;
+    // Sin max-width aquí; el contenido interno usa .container para limitar ancho.
   }
 }
 
