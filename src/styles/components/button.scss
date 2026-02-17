@@ -1,0 +1,44 @@
+@use "../variables" as *;
+
+.btn {
+  border: 0;
+  border-radius: $radius-sm;
+  padding: $space-3 $space-5;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.btn:focus-visible {
+  outline: 3px solid rgba(30, 64, 175, 0.3);
+  outline-offset: 2px;
+}
+
+.btn--primary {
+  background: $color-primary;
+  color: #fff;
+}
+
+.btn--primary:hover:not(:disabled) {
+  background: $color-primary-hover;
+}
+
+.btn--secondary {
+  background: $color-secondary;
+  color: #fff;
+}
+
+.btn--secondary:hover:not(:disabled) {
+  background: $color-secondary-hover;
+}
+
+.btn--ghost {
+  background: transparent;
+  border: 1px solid $color-border;
+  color: $color-text;
+}
