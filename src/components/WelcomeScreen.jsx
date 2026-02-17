@@ -1,42 +1,42 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
-// Genera un punto de salida aleatorio para una letra
-function getRandomLetterStart() {
-  const r = (min, max) => min + Math.random() * (max - min);
-  return {
-    "--start-x": `${r(-120, 120)}vw`,
-    "--start-y": `${r(-80, 120)}vh`,
-    "--start-z": `${r(-200, -60)}px`,
-    "--start-scale": r(0.2, 0.5),
-    "--start-rotate-x": `${r(-85, 85)}deg`,
-    "--start-rotate-y": `${r(-85, 85)}deg`,
-    "--start-rotate-z": `${r(-15, 15)}deg`,
-  };
-}
+const CLOSE_ANIMATION_MS = 800;
+const BRAND_LETTERS = ["m", "m", "e"];
 
 export default function WelcomeScreen({ onContinue }) {
   const { t } = useTranslation();
+  const [isClosing, setIsClosing] = useState(false);
 
-  // Valores aleatorios fijos por sesión (useMemo sin deps = solo al montar)
-  const [starts] = useState(() => [
-    getRandomLetterStart(),
-    getRandomLetterStart(),
-    getRandomLetterStart(),
-  ]);
+  useEffect(() => {
+    if (!isClosing) return;
+    const timer = setTimeout(() => onContinue(), CLOSE_ANIMATION_MS);
+    return () => clearTimeout(timer);
+  }, [isClosing, onContinue]);
+
+  const handleClose = () => {
+    if (isClosing) return;
+    setIsClosing(true);
+  };
 
   return (
-    <div className="welcome-screen" aria-label={t("welcome.screenAria")}>
+    <div
+      className={`welcome-screen${isClosing ? " welcome-screen--closing" : ""}`}
+      aria-label={t("welcome.screenAria")}
+    >
       <button
         type="button"
         className="welcome-screen__branding"
-        onClick={onContinue}
+        onClick={handleClose}
+        disabled={isClosing}
         aria-label={t("welcome.continueAria")}
       >
         <div className="welcome-screen__letters" aria-hidden="true">
-          <span className="welcome-screen__letter welcome-screen__letter--m-left" style={starts[0]}>m</span>
-          <span className="welcome-screen__letter welcome-screen__letter--m-right" style={starts[1]}>m</span>
-          <span className="welcome-screen__letter welcome-screen__letter--e" style={starts[2]}>e</span>
+          {BRAND_LETTERS.map((letter, index) => (
+            <span key={`${letter}-${index}`} className="welcome-screen__letter">
+              {letter}
+            </span>
+          ))}
         </div>
         <span className="welcome-screen__subtitle">{t("welcome.subtitle")}</span>
       </button>
