@@ -17,7 +17,7 @@
   top: 50%;
   left: 0;
   width: 100%;
-  height: 44px; // = ITEM_H en WheelPicker.jsx
+  height: 44px; // matches WHEEL_PICKER_ITEM_HEIGHT in core/constants
   display: flex;
   align-items: center;
   gap: $space-2;

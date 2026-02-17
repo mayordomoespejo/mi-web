@@ -1,0 +1,7 @@
+@use "../../abstracts/variables" as *;
+
+.education-section {
+  width: 100%;
+  font-family: $font-code;
+  padding-block: $space-8 $space-12;
+}

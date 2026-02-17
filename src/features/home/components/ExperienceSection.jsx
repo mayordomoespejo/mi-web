@@ -7,7 +7,7 @@ import ExperienceJobCard from "./ExperienceJobCard";
 /**
  * Sección de experiencia para la Home.
  * Muestra empresa, rol, fechas y responsabilidades con WheelPicker 3D.
- * Los elementos con [data-reveal] se animan al entrar en la zona central y se ocultan al salir (scroll inverso).
+ * Items with [data-reveal] animate in when entering view and out on reverse scroll.
  */
 export default function ExperienceSection() {
   const { t } = useTranslation();
@@ -17,30 +17,20 @@ export default function ExperienceSection() {
   });
   const containerRef = useRef(null);
 
-  // Scroll-reveal: aparece poco antes de llegar a su posición (zona central); desaparece al hacer scroll inverso.
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
-
     const items = el.querySelectorAll("[data-reveal]");
     if (!items.length) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-          } else {
-            entry.target.classList.remove("is-visible");
-          }
+          entry.target.classList.toggle("is-visible", entry.isIntersecting);
         });
       },
-      {
-        threshold: 0.2,
-        rootMargin: "-25% 0px -25% 0px"
-      }
+      { threshold: 0.2, rootMargin: "-25% 0px -25% 0px" }
     );
-
     items.forEach((item) => observer.observe(item));
     return () => observer.disconnect();
   }, [data]);
@@ -56,7 +46,7 @@ export default function ExperienceSection() {
   });
 
   return (
-    <div ref={containerRef} className="home-exp">
+    <div ref={containerRef} className="experience-section">
       {data.map((job, jobIdx) => {
         const display = getJobDisplay(job);
         return (

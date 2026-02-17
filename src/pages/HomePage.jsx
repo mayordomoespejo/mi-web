@@ -1,28 +1,27 @@
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import BioKaraoke from "../components/BioKaraoke";
-import ExperienceSection from "../components/ExperienceSection";
-import EducationSection from "../components/EducationSection";
+import { SCROLL_TO_SECTION_KEY } from "@/core/constants";
+import BioKaraoke from "@/features/home/components/BioKaraoke";
+import ExperienceSection from "@/features/home/components/ExperienceSection";
+import EducationSection from "@/features/home/components/EducationSection";
 
-const SESSION_STORAGE_SCROLL_KEY = "scrollToSection";
 export default function HomePage() {
   const { t } = useTranslation();
   const phrases = t("home.bioHighlightPhrases", { returnObjects: true });
   const bio = t("home.bio");
 
   useEffect(() => {
-    const sectionId = sessionStorage.getItem(SESSION_STORAGE_SCROLL_KEY);
+    const sectionId = sessionStorage.getItem(SCROLL_TO_SECTION_KEY);
     if (!sectionId) return;
 
-    sessionStorage.removeItem(SESSION_STORAGE_SCROLL_KEY);
+    sessionStorage.removeItem(SCROLL_TO_SECTION_KEY);
     const el = document.getElementById(sectionId);
     if (!el) return;
 
-    const id = requestAnimationFrame(() => {
+    const frameId = requestAnimationFrame(() => {
       el.scrollIntoView({ behavior: "smooth", block: "start" });
     });
-
-    return () => cancelAnimationFrame(id);
+    return () => cancelAnimationFrame(frameId);
   }, []);
 
   return (

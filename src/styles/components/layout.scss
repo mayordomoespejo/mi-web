@@ -1,23 +1,20 @@
 @use "../abstracts/variables" as *;
 @use "../abstracts/mixins" as *;
 
-/* Variables rellenadas por Layout (JS): header y stepped panel para min-height de las secciones home. */
-.site-shell {
+/* Layout: shell, header (wavebar + panel), main. CSS vars set by Layout.jsx for section min-heights. */
+.layout {
   min-height: 100vh;
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  gap: 0;
   overflow-x: hidden;
-  --site-header-height: 0px;
-  --site-wavebar-height: 0px;
-  --site-stepped-panel-height: 84.75px;
-  /* Espacio para el header fijo; evita que el contenido quede oculto bajo la cabecera */
-  padding-top: var(--site-header-height);
+  --layout-header-height: 0px;
+  --layout-wavebar-height: 0px;
+  --layout-panel-height: 84.75px;
+  padding-top: var(--layout-header-height);
 }
 
-/* Header clavado en la parte superior (fixed) en todos los tamaños de pantalla. */
-.site-hero {
+.layout__header {
   position: fixed;
   top: 0;
   left: 0;
@@ -26,15 +23,29 @@
   display: flex;
   flex-direction: column;
   gap: $space-5;
-  /* Fondo transparente; el panel (stepped-panel__inner) aporta su propio fondo */
   background: transparent;
 }
 
-/* Cuando la sección Experiencia está en vista: WaveBars y sus actions usan fondo secondary */
-.site-hero__wavebar--experience .wave-bars {
+.layout__wavebar--experience .wave-bars {
   background: $color-secondary;
 }
 
-.site-hero__wavebar--experience .wave-bars__block {
+.layout__wavebar--experience .wave-bars__block {
   background: $color-secondary;
+}
+
+.layout__main {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+
+  @media (max-width: 767px) {
+    padding-inline: $layout-padding-horizontal;
+  }
+
+  @include up(md) {
+    width: 100%;
+  }
 }

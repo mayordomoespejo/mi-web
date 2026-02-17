@@ -1,25 +1,14 @@
 import { useRef, useState, useEffect } from "react";
-
-const STEP_ANGLE = 30; // grados entre ítems
-const RADIUS = 120; // radio del cilindro en px
-const ITEM_H = 44; // altura de cada ítem en px (coincide con SCSS)
-const THROTTLE = 170; // ms mínimos entre pasos de la rueda
+import {
+  WHEEL_PICKER_THROTTLE_MS,
+  WHEEL_PICKER_STEP_ANGLE,
+  WHEEL_PICKER_RADIUS,
+  WHEEL_PICKER_ITEM_HEIGHT
+} from "@/core/constants";
 
 /**
- * Wheel Picker – simulación 2D de rueda cilíndrica.
- *
- * IMPORTANTE: No usamos transforms 3D (translateZ, rotateX, perspective) porque
- * el ancestro .home-exp tiene mask-image:fixed, que crea un compositor layer y
- * aplana cualquier transform 3D de sus descendientes.
- *
- * El efecto de cilindro se simula con:
- *   - translateY → posición vertical en el arco del cilindro
- *   - scaleY     → compresión vertical que imita la perspectiva (ítems más lejanos parecen más planos)
- *   - opacity    → desvanecimiento con la distancia al ítem activo
- */
-/**
- * @param {string[]} items - Lista de textos a mostrar en la rueda.
- * @param {string} [ariaLabel] - Etiqueta de accesibilidad para el listbox (p. ej. "Responsabilidades").
+ * Wheel Picker – 2D cylindrical wheel. Uses translateY/scaleY/opacity (no 3D)
+ * so it works inside ancestors with mask-image or similar. Items: list of strings; ariaLabel for listbox.
  */
 export default function WheelPicker({ items, ariaLabel }) {
   const [index, setIndex] = useState(0);
@@ -46,7 +35,7 @@ export default function WheelPicker({ items, ariaLabel }) {
       e.preventDefault();
 
       const now = Date.now();
-      if (now - lastTime.current < THROTTLE) return;
+      if (now - lastTime.current < WHEEL_PICKER_THROTTLE_MS) return;
       lastTime.current = now;
 
       setIndex((p) => Math.max(0, Math.min(total - 1, p + dir)));
@@ -83,13 +72,9 @@ export default function WheelPicker({ items, ariaLabel }) {
     >
       {items.map((item, i) => {
         const offset = i - index;
-        const rad = (offset * STEP_ANGLE * Math.PI) / 180;
-
-        // Posición Y en el arco del cilindro (sin 3D)
-        const y = RADIUS * Math.sin(rad);
-        // scaleY imita la compresión de perspectiva: ítems en los extremos parecen más planos
+        const rad = (offset * WHEEL_PICKER_STEP_ANGLE * Math.PI) / 180;
+        const y = WHEEL_PICKER_RADIUS * Math.sin(rad);
         const scaleY = Math.max(0.05, Math.cos(rad));
-        // Opacidad decae con la distancia al activo
         const opacity = Math.max(0, Math.cos(rad));
 
         return (
@@ -99,7 +84,7 @@ export default function WheelPicker({ items, ariaLabel }) {
             role="option"
             aria-selected={i === index}
             style={{
-              transform: `translateY(${y - ITEM_H / 2}px) scaleY(${scaleY})`,
+              transform: `translateY(${y - WHEEL_PICKER_ITEM_HEIGHT / 2}px) scaleY(${scaleY})`,
               opacity
             }}
           >

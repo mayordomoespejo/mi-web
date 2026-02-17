@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { WELCOME_CLOSE_DELAY_MS } from "@/core/constants";
 
-const CLOSE_ANIMATION_MS = 800;
 const BRAND_LETTERS = ["m", "m", "e"];
 
 export default function WelcomeScreen({ onContinue }) {
@@ -10,7 +10,7 @@ export default function WelcomeScreen({ onContinue }) {
 
   useEffect(() => {
     if (!isClosing) return;
-    const timer = setTimeout(() => onContinue(), CLOSE_ANIMATION_MS);
+    const timer = setTimeout(onContinue, WELCOME_CLOSE_DELAY_MS);
     return () => clearTimeout(timer);
   }, [isClosing, onContinue]);
 

@@ -1,11 +1,12 @@
 @use "sass:math";
 @use "../abstracts/variables" as *;
 
+// Animation timing: all in CSS for performance; JS only toggles --closing modifier
 $ease-out-smooth: cubic-bezier(0.16, 1, 0.3, 1);
 $welcome-bg-enter-duration: 0s;
-$welcome-enter-rotate-duration: 5s;
-$welcome-close-rotate-duration: 0.55s;
-$welcome-close-total-duration: 0.8s;
+$welcome-enter-rotate-duration: 4.5s;
+$welcome-close-rotate-duration: 0.5s;
+$welcome-close-total-duration: 0.75s;
 
 .welcome-screen {
   position: fixed;

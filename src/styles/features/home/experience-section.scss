@@ -1,48 +1,48 @@
 @use "../../abstracts/variables" as *;
 
-.home-exp {
+.experience-section {
   width: 100%;
   padding-block: $space-12 $space-10;
   font-family: $font-code;
 }
 
-.home-exp__job {
+.experience-section .experience-job-card + .experience-job-card {
+  margin-top: $space-12;
+}
+
+.experience-job-card {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: $space-8;
 }
 
-.home-exp__job + .home-exp__job {
-  margin-top: $space-12;
-}
-
-.home-exp__job-info {
+.experience-job-card__info {
   flex: 0 1 475px;
   max-width: 575px;
   min-width: 0;
 }
 
-.home-exp__job-wheel {
+.experience-job-card__wheel {
   flex: 1;
   min-width: 0;
 }
 
-.home-exp__meta {
+.experience-job-card__meta {
   display: flex;
   align-items: center;
   gap: $space-3;
   margin-bottom: $space-3;
 }
 
-.home-exp__dates,
-.home-exp__sep,
-.home-exp__state {
+.experience-job-card__dates,
+.experience-job-card__sep,
+.experience-job-card__state {
   font-size: 0.875rem;
   color: $color-quaternary;
 }
 
-.home-exp__company {
+.experience-job-card__company {
   font-size: clamp(1.25rem, 2.5vw, 1.6rem);
   font-weight: 700;
   color: $color-text;
@@ -50,14 +50,14 @@
   line-height: 1.2;
 }
 
-.home-exp__role {
+.experience-job-card__role {
   font-family: $font-main;
   font-size: 0.875rem;
   color: $color-quaternary;
   margin: 0;
 }
 
-.home-exp [data-reveal] {
+.experience-section [data-reveal] {
   opacity: 0;
   transform: translateY(18px);
   transition:
@@ -66,7 +66,7 @@
   transition-delay: var(--delay, 0s);
 }
 
-.home-exp [data-reveal].is-visible {
+.experience-section [data-reveal].is-visible {
   opacity: 1;
   transform: none;
 }

@@ -4,13 +4,9 @@ import { useTranslation } from "react-i18next";
 import Button from "@/shared/components/ui/Button";
 import Card from "@/shared/components/ui/Card";
 import Modal from "@/shared/components/ui/Modal";
-import { CONTACT_LINKS } from "@/shared/constants/contactLinks";
+import { CONTACT_LINKS } from "@/core/constants";
 import { copyToClipboard } from "@/shared/lib/clipboard";
 
-/**
- * Página de contacto: enlaces (email, GitHub, LinkedIn), copiar email y modal con datos.
- * @returns {JSX.Element}
- */
 export default function ContactPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { t } = useTranslation();

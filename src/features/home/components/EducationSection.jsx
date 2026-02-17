@@ -15,7 +15,7 @@ export default function EducationSection() {
   if (isLoading || !data?.length) return null;
 
   return (
-    <div className="home-edu">
+    <div className="education-section">
       {data.map((item, index) => (
         <EducationCard
           key={item.id}

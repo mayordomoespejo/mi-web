@@ -1,39 +1,38 @@
 import { useMemo, useRef, useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useLocation } from "react-router-dom";
+import {
+  SCROLL_TO_SECTION_KEY,
+  HOME_SECTION_IDS,
+  WAVE_BARS_COUNT,
+  WAVE_BARS_BASE_WEIGHT,
+  WAVE_BARS_PEAK_WEIGHT,
+  WAVE_BARS_SIGMA
+} from "@/core/constants";
 
-const NUM_BARS = 16;
-
-/** IDs de secciones en la home y clave i18n del label del botón (solo experiencia y educación). */
-const HOME_SECTIONS = [
-  { id: "home-experience", labelKey: "home.sectionExperience" },
-  { id: "home-education", labelKey: "home.sectionEducation" }
+const WAVE_SECTIONS = [
+  { id: HOME_SECTION_IDS.EXPERIENCE, labelKey: "home.sectionExperience" },
+  { id: HOME_SECTION_IDS.EDUCATION, labelKey: "home.sectionEducation" }
 ];
-const BASE_WEIGHT = 1;
-const PEAK_WEIGHT = 5;
-const WAVE_SIGMA = 2;
 
 /**
- * Peso visual de una barra según la distancia al índice bajo el puntero (efecto onda gaussiana).
- * @param {number} barIndex - Índice de la barra.
- * @param {number|null} mouseBarIndex - Índice de barra bajo el puntero, o null.
- * @returns {number} Valor de flex-grow para la barra.
+ * Visual weight for a bar based on distance to pointer (gaussian wave).
  */
 function getBarWeight(barIndex, mouseBarIndex) {
-  if (mouseBarIndex == null) return BASE_WEIGHT;
+  if (mouseBarIndex == null) return WAVE_BARS_BASE_WEIGHT;
   const distance = barIndex - mouseBarIndex;
-  const gaussian = Math.exp(-(distance * distance) / (2 * WAVE_SIGMA * WAVE_SIGMA));
-  return BASE_WEIGHT + (PEAK_WEIGHT - BASE_WEIGHT) * gaussian;
+  const gaussian = Math.exp(
+    -(distance * distance) / (2 * WAVE_BARS_SIGMA * WAVE_BARS_SIGMA)
+  );
+  return WAVE_BARS_BASE_WEIGHT + (WAVE_BARS_PEAK_WEIGHT - WAVE_BARS_BASE_WEIGHT) * gaussian;
 }
 
 function getPointerBarIndex(clientY, rectHeight, rectTop) {
   if (rectHeight <= 0) return null;
-
   const y = clientY - rectTop;
   if (y < 0 || y > rectHeight) return null;
-
   const normalized = y / rectHeight;
-  return normalized * (NUM_BARS - 1);
+  return normalized * (WAVE_BARS_COUNT - 1);
 }
 
 /**
@@ -52,13 +51,9 @@ export default function WaveBars() {
     (sectionId) => {
       if (pathname === "/") {
         const el = document.getElementById(sectionId);
-        if (el) {
-          requestAnimationFrame(() => {
-            el.scrollIntoView({ behavior: "smooth", block: "start" });
-          });
-        }
+        if (el) requestAnimationFrame(() => el.scrollIntoView({ behavior: "smooth", block: "start" }));
       } else {
-        sessionStorage.setItem("scrollToSection", sectionId);
+        sessionStorage.setItem(SCROLL_TO_SECTION_KEY, sectionId);
         navigate("/");
       }
     },
@@ -75,7 +70,7 @@ export default function WaveBars() {
   };
 
   const weights = useMemo(
-    () => Array.from({ length: NUM_BARS }, (_, i) => getBarWeight(i, mouseBarIndex)),
+    () => Array.from({ length: WAVE_BARS_COUNT }, (_, i) => getBarWeight(i, mouseBarIndex)),
     [mouseBarIndex]
   );
 
@@ -99,7 +94,7 @@ export default function WaveBars() {
             role="group"
             aria-label={t("home.scrollToNext")}
           >
-            {HOME_SECTIONS.map(({ id, labelKey }) => (
+            {WAVE_SECTIONS.map(({ id, labelKey }) => (
               <button
                 key={id}
                 type="button"

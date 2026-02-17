@@ -1,5 +1,5 @@
 /**
- * Enlaces de contacto del autor (email, GitHub, LinkedIn).
+ * Contact links (email, GitHub, LinkedIn).
  * @type {{ emailAddress: string; email: string; github: string; linkedin: string }}
  */
 export const CONTACT_LINKS = {

@@ -15,6 +15,7 @@
 @use "./features/home/home-page";
 @use "./features/home/bio-karaoke";
 @use "./features/home/experience-section";
+@use "./features/home/education-section";
 @use "./features/home/education-card";
 @use "./features/contact/contact-page";
 @use "./features/not-found/not-found-page";
@@ -85,18 +86,4 @@ ul {
 }
 
 // main es ancho completo para permitir fondos full-bleed en home sin overflow (100vw provocaba barra roja).
-.main-content {
-  flex: 1;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-  overflow-x: hidden;
-
-  @media (max-width: 767px) {
-    padding-inline: $layout-padding-horizontal;
-  }
-
-  @include up(md) {
-    width: 100%;
-  }
-}
+/* Main content lives in .layout__main (see components/layout.scss) */

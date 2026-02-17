@@ -9,10 +9,10 @@
 
 .home-page__intro {
   flex-shrink: 0;
-  min-height: calc(100vh - var(--site-header-height, 0px));
-  max-height: calc(100vh - var(--site-header-height, 0px));
-  min-height: calc(100dvh - var(--site-header-height, 0px));
-  max-height: calc(100dvh - var(--site-header-height, 0px));
+  min-height: calc(100vh - var(--layout-header-height, 0px));
+  max-height: calc(100vh - var(--layout-header-height, 0px));
+  min-height: calc(100dvh - var(--layout-header-height, 0px));
+  max-height: calc(100dvh - var(--layout-header-height, 0px));
   display: flex;
   flex-direction: column;
   padding-bottom: calc(#{$space-7} * 2);
@@ -30,15 +30,15 @@
 .home-page__experience {
   position: relative;
   flex-shrink: 0;
-  min-height: calc(100dvh - var(--site-header-height, 0px) + 84.75px + #{$space-5});
-  min-height: calc(100vh - var(--site-header-height, 0px) + 84.75px + #{$space-5});
+  min-height: calc(100dvh - var(--layout-header-height, 0px) + var(--layout-panel-height, 84.75px) + #{$space-5});
+  min-height: calc(100vh - var(--layout-header-height, 0px) + var(--layout-panel-height, 84.75px) + #{$space-5});
   width: 100%;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  scroll-margin-top: var(--site-wavebar-height, 0px);
+  scroll-margin-top: var(--layout-wavebar-height, 0px);
 }
 
 .home-page__experience::before {
@@ -56,14 +56,14 @@
 .home-page__education {
   position: relative;
   flex-shrink: 0;
-  min-height: calc(100dvh - var(--site-header-height, 0px) + 84.75px + #{$space-5});
-  min-height: calc(100vh - var(--site-header-height, 0px) + 84.75px + #{$space-5});
+  min-height: calc(100dvh - var(--layout-header-height, 0px) + var(--layout-panel-height, 84.75px) + #{$space-5});
+  min-height: calc(100vh - var(--layout-header-height, 0px) + var(--layout-panel-height, 84.75px) + #{$space-5});
   width: 100%;
   box-sizing: border-box;
   padding-inline: $layout-padding-horizontal;
-  padding-top: var(--site-header-height, 0px);
+  padding-top: var(--layout-header-height, 0px);
   padding-bottom: calc(#{$space-7} * 2);
-  scroll-margin-top: var(--site-wavebar-height, 0px);
+  scroll-margin-top: var(--layout-wavebar-height, 0px);
 }
 
 .home-page__education::before {

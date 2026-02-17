@@ -5,71 +5,44 @@ import WaveBars from "./WaveBars";
 import SteppedPanel from "./SteppedPanel";
 import Footer from "./Footer";
 
-/**
- * Mide header, solo WaveBars y SteppedPanel. Expone:
- * - --site-header-height: altura total del hero (WaveBars + gap + SteppedPanel) para padding del main.
- * - --site-wavebar-height: solo la zona de WaveBars; las secciones usan esto en scroll-margin-top
- *   para quedar justo debajo de las barras (sin stepped panel ni gap).
- * - --site-stepped-panel-height: para min-height de las secciones home.
- */
-function useShellHeights(shellRef) {
+/** Exposes --layout-header-height, --layout-wavebar-height, --layout-panel-height for sections/scroll. */
+function useLayoutHeights(layoutRef) {
   const headerRef = useRef(null);
   const wavebarRef = useRef(null);
-  const steppedPanelRef = useRef(null);
+  const panelRef = useRef(null);
 
   useEffect(() => {
-    const shell = shellRef?.current;
-    if (!shell) return;
+    const layout = layoutRef?.current;
+    if (!layout) return;
 
     const setHeights = () => {
-      if (headerRef.current) {
-        shell.style.setProperty(
-          "--site-header-height",
-          `${headerRef.current.offsetHeight}px`
-        );
-      }
-      if (wavebarRef.current) {
-        shell.style.setProperty(
-          "--site-wavebar-height",
-          `${wavebarRef.current.offsetHeight}px`
-        );
-      }
-      if (steppedPanelRef.current) {
-        shell.style.setProperty(
-          "--site-stepped-panel-height",
-          `${steppedPanelRef.current.offsetHeight}px`
-        );
-      }
+      if (headerRef.current) layout.style.setProperty("--layout-header-height", `${headerRef.current.offsetHeight}px`);
+      if (wavebarRef.current) layout.style.setProperty("--layout-wavebar-height", `${wavebarRef.current.offsetHeight}px`);
+      if (panelRef.current) layout.style.setProperty("--layout-panel-height", `${panelRef.current.offsetHeight}px`);
     };
 
     setHeights();
     const ro = new ResizeObserver(setHeights);
     if (headerRef.current) ro.observe(headerRef.current);
     if (wavebarRef.current) ro.observe(wavebarRef.current);
-    if (steppedPanelRef.current) ro.observe(steppedPanelRef.current);
+    if (panelRef.current) ro.observe(panelRef.current);
     return () => ro.disconnect();
-  }, [shellRef]);
+  }, [layoutRef]);
 
-  return { headerRef, wavebarRef, steppedPanelRef };
+  return { headerRef, wavebarRef, panelRef };
 }
 
-/**
- * Shell principal de la aplicación: barras de navegación, panel superior, contenido y pie.
- * @returns {JSX.Element}
- */
 export default function Layout() {
-  const shellRef = useRef(null);
-  const { headerRef, wavebarRef, steppedPanelRef } = useShellHeights(shellRef);
+  const layoutRef = useRef(null);
+  const { headerRef, wavebarRef, panelRef } = useLayoutHeights(layoutRef);
   const { i18n } = useTranslation();
   const { pathname } = useLocation();
   const [isExperienceActive, setIsExperienceActive] = useState(false);
 
-  // Título de la pestaña según idioma (traducción meta.pageTitle)
   useEffect(() => {
     document.title = i18n.t("meta.pageTitle");
   }, [i18n.language, i18n]);
 
-  // En home: WaveBars usa fondo secondary cuando la sección Experiencia está activa (visible bajo las barras)
   useEffect(() => {
     if (pathname !== "/") {
       setIsExperienceActive(false);
@@ -82,10 +55,7 @@ export default function Layout() {
     const check = () => {
       const wavebarHeight = wavebarEl.offsetHeight;
       const rect = experienceEl.getBoundingClientRect();
-      // Experiencia activa solo cuando la zona visible bajo las barras es esa sección
-      // (no en Intro ni cuando ya hemos pasado a Educación)
-      const isActive = rect.top <= wavebarHeight && rect.bottom > wavebarHeight;
-      setIsExperienceActive(isActive);
+      setIsExperienceActive(rect.top <= wavebarHeight && rect.bottom > wavebarHeight);
     };
 
     check();
@@ -98,19 +68,19 @@ export default function Layout() {
   }, [pathname, wavebarRef]);
 
   return (
-    <div ref={shellRef} className="site-shell">
-      <header ref={headerRef} className="site-hero">
+    <div ref={layoutRef} className="layout">
+      <header ref={headerRef} className="layout__header">
         <div
           ref={wavebarRef}
-          className={`site-hero__wavebar${isExperienceActive ? " site-hero__wavebar--experience" : ""}`}
+          className={`layout__wavebar${isExperienceActive ? " layout__wavebar--experience" : ""}`}
         >
           <WaveBars />
         </div>
-        <div ref={steppedPanelRef} className="container">
+        <div ref={panelRef} className="container">
           <SteppedPanel />
         </div>
       </header>
-      <main className="main-content">
+      <main className="layout__main">
         <Outlet />
       </main>
       <Footer />

@@ -1,11 +1,5 @@
 @use "../../abstracts/variables" as *;
 
-.home-edu {
-  width: 100%;
-  font-family: $font-code;
-  padding-block: $space-8 $space-12;
-}
-
 .education-card {
   position: relative;
   background-color: $color-bg;
@@ -19,7 +13,7 @@
 
 .education-card--sticky {
   position: sticky;
-  top: var(--site-header-height, 0);
+  top: var(--layout-header-height, 0);
   z-index: 1;
   box-shadow: $shadow-card;
 }
