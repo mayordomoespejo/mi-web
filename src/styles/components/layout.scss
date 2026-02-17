@@ -1,5 +1,11 @@
+@use "../variables" as *;
+@use "../mixins" as *;
+
+/* Ocupa al menos el alto del viewport; en móvil 100dvh evita que la barra del navegador fuerce scroll */
 .site-shell {
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
+  gap: $space-5;
 }

@@ -15,30 +15,34 @@
 }
 
 .btn:focus-visible {
-  outline: 3px solid rgba(30, 64, 175, 0.3);
+  outline: 3px solid $focus-ring-color;
   outline-offset: 2px;
 }
 
 .btn--primary {
   background: $color-primary;
-  color: #fff;
+  color: $color-tertiary;
 }
 
 .btn--primary:hover:not(:disabled) {
-  background: $color-primary-hover;
+  opacity: $hover-opacity-soft;
 }
 
 .btn--secondary {
   background: $color-secondary;
-  color: #fff;
+  color: $color-text;
 }
 
 .btn--secondary:hover:not(:disabled) {
-  background: $color-secondary-hover;
+  opacity: $hover-opacity-soft;
 }
 
 .btn--ghost {
   background: transparent;
   border: 1px solid $color-border;
   color: $color-text;
+}
+
+.btn--ghost:hover:not(:disabled) {
+  opacity: $hover-opacity-soft;
 }

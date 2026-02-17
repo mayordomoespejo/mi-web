@@ -1,9 +1,14 @@
 const es = {
   common: {
-    brandName: "Miguel Mayordomo"
+    brandName: "miguel mayordomo espejo",
+    brandNameShort: "mme",
+    brandNamePart1: "iguel",
+    brandNamePart2: "ayordomo",
+    brandNamePart3: "spejo"
   },
   navbar: {
     home: "Inicio",
+    experienceAndEducation: "Experiencia y formación",
     experience: "Experiencia",
     education: "Formación",
     contact: "Contacto",

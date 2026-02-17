@@ -1,0 +1,29 @@
+@use "../variables" as *;
+
+.language-switcher {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+}
+
+.language-switcher__btn {
+  border: 1px solid $color-border;
+  background: transparent;
+  color: $color-muted;
+  border-radius: $radius-sm;
+  padding: 0.2rem 0.45rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.language-switcher__btn:hover {
+  opacity: $hover-opacity-soft;
+}
+
+.language-switcher__btn.is-active {
+  background: $color-primary;
+  border-color: $color-primary;
+  color: $color-tertiary;
+  font-weight: 600;
+}

@@ -17,7 +17,7 @@ $welcome-close-total-duration: 0.8s;
   align-content: center;
   padding: $space-6;
   color: $color-brand-text;
-  background: $color-brand;
+  background: $color-bg;
   opacity: 0;
   animation: welcome-bg-enter $welcome-bg-enter-duration ease-out forwards;
 

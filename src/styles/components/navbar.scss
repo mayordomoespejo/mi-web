@@ -2,7 +2,7 @@
 @use "../mixins" as *;
 
 .navbar {
-  background: $color-surface;
+  background: $color-header-footer;
   border-bottom: 1px solid $color-border;
   position: sticky;
   top: 0;
@@ -16,17 +16,17 @@
   min-height: 72px;
 }
 
-.navbar__brand {
-  font-weight: 700;
-  color: $color-text;
-}
-
 .navbar__toggle {
   border: 1px solid $color-border;
-  background: $color-surface;
+  background: $color-header-footer;
   padding: $space-2 $space-3;
   border-radius: $radius-sm;
   cursor: pointer;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: $hover-opacity-soft;
+  }
 
   @include up(md) {
     display: none;
@@ -38,7 +38,7 @@
   top: 72px;
   left: 0;
   right: 0;
-  background: $color-surface;
+  background: $color-header-footer;
   border-bottom: 1px solid $color-border;
   display: none;
   flex-direction: column;
@@ -58,9 +58,46 @@
   }
 }
 
+// Grupo "Experiencia y formación" como un solo bloque
+.navbar__link-group {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-2 $space-3;
+  margin: 0 (-$space-3);
+  border-radius: $radius-sm;
+  background: rgba(0, 0, 0, 0.04);
+
+  @include up(md) {
+    margin: 0;
+    padding: $space-2 $space-3;
+  }
+}
+
+.navbar__link-group-item {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+}
+
+.navbar__link-group-sep {
+  color: $color-muted;
+  font-weight: 400;
+  pointer-events: none;
+}
+
+.navbar__link-group .navbar__link {
+  padding: 0;
+}
+
 .navbar__link {
   color: $color-text;
   padding: $space-2 0;
+  transition: opacity 0.2s ease;
+}
+
+.navbar__link:hover {
+  opacity: $hover-opacity-soft;
 }
 
 .navbar__link.is-active {
@@ -68,30 +105,12 @@
   font-weight: 600;
 }
 
-.navbar__languages {
-  display: flex;
-  align-items: center;
-  gap: $space-2;
+// Ajustes del LanguageSwitcher dentro del navbar (márgenes según contexto)
+.navbar__links .language-switcher {
   margin-top: $space-3;
 
   @include up(md) {
     margin-top: 0;
     margin-left: $space-2;
   }
-}
-
-.navbar__language {
-  border: 1px solid $color-border;
-  background: transparent;
-  color: $color-muted;
-  border-radius: $radius-sm;
-  padding: 0.2rem 0.45rem;
-  font-size: 0.75rem;
-  cursor: pointer;
-}
-
-.navbar__language.is-active {
-  border-color: $color-primary;
-  color: $color-primary;
-  font-weight: 600;
 }

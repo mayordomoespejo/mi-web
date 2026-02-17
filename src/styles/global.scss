@@ -2,7 +2,10 @@
 @use "./variables" as *;
 @use "./mixins" as *;
 @use "./components/layout";
-@use "./components/navbar";
+@use "./components/wave-bars";
+@use "./components/stepped-panel";
+@use "./components/brand-mme";
+@use "./components/language-switcher";
 @use "./components/footer";
 @use "./components/button";
 @use "./components/card";
@@ -21,20 +24,32 @@
   box-sizing: border-box;
 }
 
+// Cadena de altura para que la página ocupe al menos el viewport sin forzar scroll
+html {
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
 body {
   margin: 0;
+  min-height: 100%;
   font-family: $font-main;
-  background: linear-gradient(180deg, #f8fbff 0%, #eef4f8 100%);
+  background: $color-bg;
   color: $color-text;
+}
+
+#root {
+  min-height: 100%;
 }
 
 a {
   color: $color-secondary;
   text-decoration: none;
+  transition: opacity 0.2s ease;
 }
 
 a:hover {
-  text-decoration: underline;
+  opacity: $hover-opacity-strong;
 }
 
 h1,
@@ -55,13 +70,34 @@ ul {
 }
 
 .container {
-  width: min(1100px, 92%);
-  margin: 0 auto;
+  @media (max-width: 767px) {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding-inline: $layout-padding-horizontal;
+  }
+  @include up(md) {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
 }
 
+/* Crece para llenar el espacio entre el contenido superior y el footer; evita scroll cuando hay poco contenido */
 .main-content {
-  min-height: calc(100vh - 140px);
-  padding: $space-10 0;
+  flex: 1;
+  min-height: 0;
+@media (max-width: 767px) {
+  flex: 1;
+  min-height: 0;
+  padding-inline: $layout-padding-horizontal;
+  }
+  
+  @include up(md) {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
 }
 
 .page-header {

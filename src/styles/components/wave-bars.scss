@@ -1,0 +1,104 @@
+@use "../variables" as *;
+@use "../mixins" as *;
+
+.wave-bars {
+  --wave-bars-bg: #{$color-primary};
+  --wave-bars-bar: #{$color-text};
+  --wave-bars-gap: 8px;
+  --wave-bars-padding-block: 24px;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 30vh;
+  min-height: 30vh;
+  box-sizing: border-box;
+  background: var(--wave-bars-bg);
+  cursor: default;
+  pointer-events: auto;
+}
+
+.wave-bars__bars {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--wave-bars-gap);
+  z-index: 1;
+}
+
+.wave-bars__bar {
+  width: 100%;
+  flex-basis: 0;
+  min-height: 4px;
+  background: var(--wave-bars-bar);
+  transition: flex-grow 0.2s ease-out;
+  flex-shrink: 0;
+}
+
+// Misma lógica horizontal que .container y .main-content: móvil = padding 4%, desktop = max-width 1100px centrado
+.wave-bars__actions {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  padding-block: $space-3;
+  @media (max-width: 767px) {
+    padding-inline: $layout-padding-horizontal;
+  }
+  @include up(md) {
+    padding-inline: calc((100% - min(100%, 1100px)) / 2);
+  }
+  pointer-events: none;
+}
+
+.wave-bars__actions-inner {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  width: max-content;
+}
+
+// Bloque Experiencia y formación (un contenedor, dos enlaces)
+// El margen lateral lo da .wave-bars__actions (padding-inline: $layout-padding-horizontal)
+.wave-bars__block {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  padding: $space-2 $space-4;
+  background: $color-bg;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.wave-bars__btn {
+  pointer-events: auto;
+  padding: $space-2 0;
+  background: transparent;
+  color: $color-text;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  text-align: right;
+
+  .wave-bars__btn-text {
+    display: inline-block;
+    transition: transform 0.12s ease-out, opacity 0.12s ease-out;
+  }
+
+  &:active .wave-bars__btn-text {
+    transform: scale(0.96);
+    opacity: 0.85;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &.is-active {
+    color: $color-primary;
+  }
+}
