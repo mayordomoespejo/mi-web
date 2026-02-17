@@ -1,0 +1,21 @@
+{
+  "name": "Miguel Mayordomo",
+  "role": "Desarrollador Frontend / Mobile",
+  "stack": [
+    "React",
+    "React Native",
+    "Expo",
+    "Vite",
+    "Zustand",
+    "TanStack Query",
+    "Axios",
+    "Firebase",
+    "Formik",
+    "Yup",
+    "Sass",
+    "n8n",
+    "Cursor",
+    "OpenAI",
+    "Git"
+  ]
+}

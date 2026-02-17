@@ -1,0 +1,14 @@
+@use "../variables" as *;
+
+.footer {
+  border-top: 1px solid $color-border;
+  background: $color-surface;
+}
+
+.footer__inner {
+  min-height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $color-muted;
+}

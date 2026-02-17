@@ -1,0 +1,11 @@
+@use "../variables" as *;
+
+.notfound {
+  text-align: center;
+  padding: $space-12 0;
+}
+
+.notfound p {
+  color: $color-muted;
+  margin-bottom: $space-5;
+}
