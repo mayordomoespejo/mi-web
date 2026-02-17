@@ -1,5 +1,5 @@
-@use "../variables" as *;
-@use "../mixins" as *;
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
 
 .wave-bars {
   --wave-bars-bg: #{$color-primary};
@@ -95,6 +95,8 @@
 
   &__btn-text {
     display: inline-block;
-    transition: transform 0.12s ease-out, opacity 0.12s ease-out;
+    transition:
+      transform 0.12s ease-out,
+      opacity 0.12s ease-out;
   }
 }

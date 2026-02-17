@@ -1,0 +1,81 @@
+@use "../../abstracts/variables" as *;
+
+.home-edu {
+  width: 100%;
+  font-family: $font-code;
+  padding-block: $space-8 $space-12;
+}
+
+.education-card {
+  position: relative;
+  background-color: $color-bg;
+  min-height: 80vh;
+  padding: $space-8 $space-6 $space-12;
+  border-radius: $radius-lg;
+  transition:
+    box-shadow 0.35s ease,
+    transform 0.35s ease;
+}
+
+.education-card--sticky {
+  position: sticky;
+  top: var(--site-header-height, 0);
+  z-index: 1;
+  box-shadow: $shadow-card;
+}
+
+.education-card--stacks-on-top {
+  z-index: 2;
+  box-shadow: $shadow-card;
+}
+
+.education-card__header {
+  display: flex;
+  align-items: baseline;
+  gap: $space-6;
+  flex-wrap: wrap;
+  padding-bottom: $space-4;
+}
+
+.education-card__id {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: $color-muted;
+  flex-shrink: 0;
+}
+
+.education-card__title {
+  font-family: $font-main;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: 700;
+  color: $color-text;
+  margin: 0;
+  line-height: 1.2;
+  flex: 1;
+  min-width: 0;
+}
+
+.education-card__separator {
+  height: 0;
+  border: none;
+  border-top: 1px dashed $color-border;
+  margin: 0 0 $space-6;
+}
+
+.education-card__body {
+  max-width: 42rem;
+}
+
+.education-card__center {
+  font-size: 1rem;
+  color: $color-text;
+  margin: 0 0 $space-2;
+  line-height: 1.4;
+}
+
+.education-card__dates {
+  font-size: 0.875rem;
+  color: $color-quaternary;
+  margin: 0 0 $space-6;
+}

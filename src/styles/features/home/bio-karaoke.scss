@@ -1,0 +1,29 @@
+@use "../../abstracts/variables" as *;
+
+.home-bio {
+  margin-top: auto;
+  padding-top: $space-8;
+  max-width: 42rem;
+  margin-left: auto;
+  margin-right: 0;
+  text-align: right;
+  color: $color-muted;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  cursor: pointer;
+}
+
+.home-bio__word {
+  border-radius: 2px;
+  transition: background-color 0.15s ease;
+}
+
+.home-bio__word:hover,
+.home-bio--read {
+  background-color: $color-secondary;
+}
+
+.home-bio__word--highlight {
+  color: $color-text;
+  font-weight: 600;
+}

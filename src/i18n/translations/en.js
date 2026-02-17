@@ -29,17 +29,23 @@ const en = {
     // Values to compare endDate against to detect current job (avoids literals in component)
     endDatePresentEs: "Actualidad",
     endDatePresentEn: "Present",
-    sectionEducation: "Education",
+    sectionEducation: "Training",
     bio: "Frontend Developer specialised in web and cross-platform mobile applications, with solid experience in React and React Native. Focused on modern architecture development, API integration and efficient consumption, process automation and the use of AI tools to optimise workflows. Committed to code quality, solution scalability and continuous improvement of the user experience.",
     bioHighlightPhrases: ["Frontend Developer", "React Native", "React"],
     scrollToNext: "Go to next section",
-    contact: "Contact",
-    stackTitle: "Main stack",
     wheelPickerResponsibilitiesAria: "Responsibilities",
-    loadingStack: "Loading stack...",
-    stackError: "Could not load summary.",
-    modalTitle: "Contact",
-    writeMe: "Write to me at",
+    education: {
+      dawIlerna: {
+        title: "Higher Technician in Web Application Development",
+        center: "ILERNA FP",
+        dates: "Sept 2023 – Jun 2024"
+      },
+      bachRicardoOrtega: {
+        title: "Scientific-Technological Baccalaureate",
+        center: "IES Ricardo Ortega",
+        dates: "Sept 2002 – Jun 2004"
+      }
+    },
     experience: {
       gyoza: {
         role: "Frontend Developer",
@@ -72,7 +78,7 @@ const en = {
     copyError: "Could not copy email"
   },
   footer: {
-    author: "Miguel Mayordomo"
+    credit: "{{year}} · Miguel Mayordomo Espejo"
   },
   notFound: {
     message: "Page not found.",
@@ -80,9 +86,6 @@ const en = {
   },
   modal: {
     close: "Close modal"
-  },
-  tooltip: {
-    info: "Information"
   }
 };
 

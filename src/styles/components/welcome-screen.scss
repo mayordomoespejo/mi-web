@@ -1,5 +1,5 @@
 @use "sass:math";
-@use "../variables" as *;
+@use "../abstracts/variables" as *;
 
 $ease-out-smooth: cubic-bezier(0.16, 1, 0.3, 1);
 $welcome-bg-enter-duration: 0s;
@@ -52,7 +52,8 @@ $welcome-close-total-duration: 0.8s;
   align-items: center;
   justify-content: center;
   transform-style: preserve-3d;
-  animation: welcome-letter-block-enter $welcome-enter-rotate-duration $ease-out-smooth forwards;
+  animation: welcome-letter-block-enter $welcome-enter-rotate-duration $ease-out-smooth
+    forwards;
   animation-delay: $welcome-bg-enter-duration;
 
   .welcome-screen--closing & {
@@ -70,7 +71,10 @@ $welcome-close-total-duration: 0.8s;
   letter-spacing: -0.05em;
   opacity: 1;
   transform-style: preserve-3d;
-  transition: color 0.5s ease, -webkit-text-fill-color 0.5s ease, -webkit-text-stroke 0.5s ease;
+  transition:
+    color 0.5s ease,
+    -webkit-text-fill-color 0.5s ease,
+    -webkit-text-stroke 0.5s ease;
   transform: translate3d(0, 0, 0) scale(1) rotateX(0) rotateY(0) rotateZ(0);
 }
 
@@ -91,7 +95,8 @@ $welcome-close-total-duration: 0.8s;
   text-transform: uppercase;
   text-align: center;
   transform-style: preserve-3d;
-  animation: welcome-subtitle-enter-right $welcome-enter-rotate-duration $ease-out-smooth forwards;
+  animation: welcome-subtitle-enter-right $welcome-enter-rotate-duration $ease-out-smooth
+    forwards;
   animation-delay: $welcome-bg-enter-duration;
 
   .welcome-screen--closing & {

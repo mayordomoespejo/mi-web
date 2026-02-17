@@ -1,6 +1,0 @@
-{
-  "name": "Miguel Mayordomo",
-  "role": "Desarrollador Frontend / Mobile",
-  "bio": "Desarrollador Frontend especializado en aplicaciones web y móviles multiplataforma, con sólida experiencia en React y React Native. Enfocado en el desarrollo de arquitecturas modernas, integración y consumo eficiente de APIs, automatización de procesos y aplicación de herramientas de inteligencia artificial para optimizar flujos de trabajo. Comprometido con la calidad del código, la escalabilidad de las soluciones y la mejora continua de la experiencia de usuario.",
-  "stack": ["React", "React Native", "Expo", "Vite", "Zustand", "TanStack Query", "Axios", "Firebase", "Formik", "Yup", "Sass", "n8n", "Cursor", "OpenAI", "Git"]
-}

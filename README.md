@@ -1,6 +1,6 @@
 # Portfolio Web - Miguel Mayordomo
 
-Portfolio profesional construido con React + Vite, con navegación multipágina, datos locales desde JSON (mocks) y gestión de estado con TanStack React Query.
+Portfolio profesional construido con React + Vite, con arquitectura por dominios (`features`) y módulos compartidos (`shared`).
 
 ## Stack
 
@@ -12,18 +12,17 @@ Portfolio profesional construido con React + Vite, con navegación multipágina,
 
 ## Características
 
-- Layout general con `Navbar` responsive + `Outlet` + `Footer`
+- Layout general con `WaveBars` + `SteppedPanel` + `Outlet` + `Footer`
 - Páginas: Home, Contact, NotFound (404)
 - Datos desde JSON en `src/mocks` (sin API real)
-- Servicio `profileApi.js` con `getExperience()`, `getEducation()`, `getProfileSummary()` (datos locales)
-- React Query para experiencia en Home (`getExperience`)
+- Servicio `profileApi.js` con `getExperience()` y `getEducation()` (datos locales)
+- React Query para experiencia y formación en Home
 - Modal reutilizable accesible:
   - overlay
   - cierre con `ESC`
   - cierre click fuera
   - `role="dialog"` y `aria-modal="true"`
   - bloqueo de scroll del body
-- Tooltip reutilizable sin librerías externas
 - Copiado de email al portapapeles con toast de éxito/error
 
 ## Estructura
@@ -32,42 +31,31 @@ Portfolio profesional construido con React + Vite, con navegación multipágina,
 src/
   app/
     App.jsx
-    routes.jsx
-  components/
-    Layout/
-      Layout.jsx
-      Navbar.jsx
-      Footer.jsx
-      WaveBars.jsx
-      BrandMme.jsx
-      SteppedPanel.jsx
-      LanguageSwitcher.jsx
-    HomeExperienceSection.jsx
-    UI/
-      Button.jsx
-      Card.jsx
-      Modal.jsx
-      Tooltip.jsx
-      WheelPicker.jsx
-  pages/
-    Home.jsx
-    Contact.jsx
-    NotFound.jsx
+    router.jsx
+  features/
+    home/
+      pages/HomePage.jsx
+      components/
+    contact/
+      pages/ContactPage.jsx
+    not-found/
+      pages/NotFoundPage.jsx
+  shared/
+    components/
+      layout/
+      ui/
+    constants/
+    lib/
   services/
     profileApi.js
   mocks/
     experience.json
     education.json
-    profile.json
   styles/
-    _variables.scss
-    _mixins.scss
-    global.scss
+    abstracts/
     components/
-    pages/
-  utils/
-    clipboard.js
-    constants.js
+    features/
+    index.scss
   main.jsx
 ```
 

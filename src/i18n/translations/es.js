@@ -29,17 +29,23 @@ const es = {
     // Valores con los que se compara endDate para saber si el trabajo es actual (evita literales en el componente)
     endDatePresentEs: "Actualidad",
     endDatePresentEn: "Present",
-    sectionEducation: "Educación",
+    sectionEducation: "Formación",
     bio: "Desarrollador Frontend especializado en aplicaciones web y móviles multiplataforma, con sólida experiencia en React y React Native. Enfocado en el desarrollo de arquitecturas modernas, integración y consumo eficiente de APIs, automatización de procesos y aplicación de herramientas de inteligencia artificial para optimizar flujos de trabajo. Comprometido con la calidad del código, la escalabilidad de las soluciones y la mejora continua de la experiencia de usuario.",
     bioHighlightPhrases: ["Desarrollador Frontend", "React Native", "React"],
     scrollToNext: "Ir a la siguiente sección",
-    contact: "Contactar",
-    stackTitle: "Stack principal",
     wheelPickerResponsibilitiesAria: "Responsabilidades",
-    loadingStack: "Cargando stack...",
-    stackError: "No se pudo cargar el resumen.",
-    modalTitle: "Contactar",
-    writeMe: "Escríbeme a",
+    education: {
+      dawIlerna: {
+        title: "Técnico Superior en Desarrollo de Aplicaciones Web",
+        center: "ILERNA FP",
+        dates: "Sept 2023 – Jun 2024"
+      },
+      bachRicardoOrtega: {
+        title: "Bachillerato Científico-Tecnológico",
+        center: "IES Ricardo Ortega",
+        dates: "Sept 2002 – Jun 2004"
+      }
+    },
     experience: {
       gyoza: {
         role: "Desarrollador Frontend",
@@ -72,7 +78,7 @@ const es = {
     copyError: "No se pudo copiar el email"
   },
   footer: {
-    author: "Miguel Mayordomo"
+    credit: "{{year}} · Miguel Mayordomo Espejo"
   },
   notFound: {
     message: "Página no encontrada.",
@@ -80,9 +86,6 @@ const es = {
   },
   modal: {
     close: "Cerrar modal"
-  },
-  tooltip: {
-    info: "Información"
   }
 };
 

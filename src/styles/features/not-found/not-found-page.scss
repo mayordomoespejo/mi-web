@@ -1,0 +1,11 @@
+@use "../../abstracts/variables" as *;
+
+.not-found-page {
+  text-align: center;
+  padding: $space-12 0;
+}
+
+.not-found-page p {
+  color: $color-muted;
+  margin-bottom: $space-5;
+}

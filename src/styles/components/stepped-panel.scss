@@ -1,5 +1,5 @@
-@use "../variables" as *;
-@use "../mixins" as *;
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
 
 // Forma con borde inferior escalonado. Va dentro de .container en el Layout para alinearse con el resto.
 .stepped-panel {

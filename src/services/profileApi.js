@@ -1,7 +1,6 @@
 // Datos desde mocks locales (sin API real ni simulaciones de red)
-import experience from "../mocks/experience.json";
-import education from "../mocks/education.json";
-import profile from "../mocks/profile.json";
+import experience from "@/mocks/experience.json";
+import education from "@/mocks/education.json";
 
 /**
  * Devuelve la lista de experiencia laboral.
@@ -17,12 +16,4 @@ export function getExperience() {
  */
 export function getEducation() {
   return Promise.resolve(education);
-}
-
-/**
- * Devuelve el resumen del perfil (nombre, rol, bio, stack).
- * @returns {Promise<{ name: string; role: string; bio: string; stack: string[] }>}
- */
-export function getProfileSummary() {
-  return Promise.resolve(profile);
 }
