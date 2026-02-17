@@ -1,8 +1,10 @@
 import { useId, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function Tooltip({ label, children }) {
   const id = useId();
   const [visible, setVisible] = useState(false);
+  const { t } = useTranslation();
 
   return (
     <span
@@ -16,7 +18,7 @@ export default function Tooltip({ label, children }) {
         type="button"
         className="tooltip__trigger"
         aria-describedby={id}
-        aria-label="Información"
+        aria-label={t("tooltip.info")}
       >
         {children}
       </button>

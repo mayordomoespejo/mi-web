@@ -1,28 +1,34 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-
-const links = [
-  { to: "/", label: "Home" },
-  { to: "/experience", label: "Experience" },
-  { to: "/education", label: "Education" },
-  { to: "/contact", label: "Contact" }
-];
+import { useTranslation } from "react-i18next";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const { t, i18n } = useTranslation();
+
+  const links = [
+    { to: "/", label: t("navbar.home") },
+    { to: "/experience", label: t("navbar.experience") },
+    { to: "/education", label: t("navbar.education") },
+    { to: "/contact", label: t("navbar.contact") }
+  ];
 
   const closeMenu = () => setIsOpen(false);
+  const changeLanguage = (language) => {
+    i18n.changeLanguage(language);
+    closeMenu();
+  };
 
   return (
     <header className="navbar">
       <div className="container navbar__inner">
         <NavLink to="/" className="navbar__brand" onClick={closeMenu}>
-          Miguel Mayordomo
+          {t("common.brandName")}
         </NavLink>
 
         <button
           className="navbar__toggle"
-          aria-label="Abrir menú"
+          aria-label={t("navbar.openMenu")}
           aria-expanded={isOpen}
           onClick={() => setIsOpen((prev) => !prev)}
         >
@@ -42,6 +48,22 @@ export default function Navbar() {
               {link.label}
             </NavLink>
           ))}
+          <div className="navbar__languages" aria-label={t("navbar.changeLanguage")}>
+            <button
+              type="button"
+              className={`navbar__language ${i18n.resolvedLanguage === "es" ? "is-active" : ""}`}
+              onClick={() => changeLanguage("es")}
+            >
+              {t("navbar.spanish")}
+            </button>
+            <button
+              type="button"
+              className={`navbar__language ${i18n.resolvedLanguage === "en" ? "is-active" : ""}`}
+              onClick={() => changeLanguage("en")}
+            >
+              {t("navbar.english")}
+            </button>
+          </div>
         </nav>
       </div>
     </header>

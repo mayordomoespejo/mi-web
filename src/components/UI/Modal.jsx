@@ -1,10 +1,12 @@
 import { useEffect, useId, useRef } from "react";
 import { createPortal } from "react-dom";
+import { useTranslation } from "react-i18next";
 import Button from "./Button";
 
 export default function Modal({ isOpen, onClose, title, children }) {
   const titleId = useId();
   const closeButtonRef = useRef(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!isOpen) return undefined;
@@ -46,7 +48,7 @@ export default function Modal({ isOpen, onClose, title, children }) {
             ref={closeButtonRef}
             variant="ghost"
             onClick={onClose}
-            aria-label="Cerrar modal"
+            aria-label={t("modal.close")}
           >
             ✕
           </Button>

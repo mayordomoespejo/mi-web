@@ -1,10 +1,12 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 import Button from "../components/UI/Button";
 import Card from "../components/UI/Card";
 import { getEducation } from "../services/profileApi";
 
 export default function Education() {
   const queryClient = useQueryClient();
+  const { t } = useTranslation();
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["education"],
@@ -14,19 +16,19 @@ export default function Education() {
   return (
     <section className="education">
       <div className="page-header">
-        <h1>Education</h1>
+        <h1>{t("education.title")}</h1>
         <Button
           variant="secondary"
           onClick={() => queryClient.invalidateQueries({ queryKey: ["education"] })}
         >
-          Refrescar
+          {t("education.refresh")}
         </Button>
       </div>
 
-      {isLoading && <p>Cargando formación...</p>}
-      {isError && <p>Error al cargar formación.</p>}
+      {isLoading && <p>{t("education.loading")}</p>}
+      {isError && <p>{t("education.error")}</p>}
       {!isLoading && !isError && data?.length === 0 && (
-        <p>No hay formación disponible.</p>
+        <p>{t("education.empty")}</p>
       )}
 
       {!isLoading &&

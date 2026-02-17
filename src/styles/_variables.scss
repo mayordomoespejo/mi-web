@@ -1,5 +1,6 @@
-$font-main: "Poppins", "Segoe UI", Tahoma, sans-serif;
-$font-heading: "Montserrat", "Segoe UI", Tahoma, sans-serif;
+// Fuente principal del proyecto (definida en _fonts.scss)
+$font-main: "SuisseIntlMono", "Courier New", monospace;
+$font-heading: "SuisseIntlMono", "Courier New", monospace;
 
 $color-bg: #f4f7fb;
 $color-surface: #ffffff;
@@ -12,6 +13,10 @@ $color-secondary-hover: #1e40af;
 $color-border: #dbe2ea;
 $color-overlay: rgba(17, 24, 39, 0.55);
 $color-danger: #b91c1c;
+
+// Brand / welcome: principal y texto
+$color-brand: #dd5d50;
+$color-brand-text: #050505;
 
 $radius-sm: 8px;
 $radius-md: 12px;

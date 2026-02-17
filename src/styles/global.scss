@@ -1,3 +1,4 @@
+@use "./fonts";
 @use "./variables" as *;
 @use "./mixins" as *;
 @use "./components/layout";
@@ -7,6 +8,7 @@
 @use "./components/card";
 @use "./components/modal";
 @use "./components/tooltip";
+@use "./components/welcome-screen";
 @use "./pages/home";
 @use "./pages/experience";
 @use "./pages/education";

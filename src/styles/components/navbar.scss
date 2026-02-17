@@ -67,3 +67,31 @@
   color: $color-primary;
   font-weight: 600;
 }
+
+.navbar__languages {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  margin-top: $space-3;
+
+  @include up(md) {
+    margin-top: 0;
+    margin-left: $space-2;
+  }
+}
+
+.navbar__language {
+  border: 1px solid $color-border;
+  background: transparent;
+  color: $color-muted;
+  border-radius: $radius-sm;
+  padding: 0.2rem 0.45rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.navbar__language.is-active {
+  border-color: $color-primary;
+  color: $color-primary;
+  font-weight: 600;
+}
