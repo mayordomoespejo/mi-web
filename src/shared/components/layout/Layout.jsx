@@ -86,10 +86,10 @@ export default function Layout() {
       // Punto justo debajo del panel: la sección que lo contiene es la que "está en" el panel
       const x = panelRect.left + panelRect.width / 2;
       const y = panelRect.bottom + 1;
-      const elAtPoint = document.elementFromPoint(x, y);
-      const isExperience =
-        elAtPoint != null &&
-        (experienceEl === elAtPoint || experienceEl.contains(elAtPoint));
+      const elements = document.elementsFromPoint(x, y);
+      const isExperience = elements.some(
+        (el) => el === experienceEl || experienceEl.contains(el)
+      );
       setIsExperienceAtTalkPanel(isExperience);
     };
 
