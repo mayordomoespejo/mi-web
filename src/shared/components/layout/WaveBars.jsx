@@ -11,13 +11,13 @@ import {
 } from "@/core/constants";
 
 /**
- * Returns the width in pixels of the wave-bars actions inner block (the one with
- * "Experiencia" / "Formación"). Measures the actual rendered element so it stays
- * correct when labels, font or padding change.
- * @param {HTMLElement | null} element - The element with class "wave-bars__actions-inner"
- * @returns {number | null} Width in px, or null if element is missing
+ * Returns the width in pixels of the wave-bars actions inner block.
+ * Measures the actual rendered element so it stays correct when labels,
+ * font or padding change.
+ * @param {HTMLElement | null} element
+ * @returns {number | null} Width in px, or null if element is missing.
  */
-export function getActionsInnerWidth(element) {
+function getActionsInnerWidth(element) {
   if (!element || typeof element.getBoundingClientRect !== "function") return null;
   return element.getBoundingClientRect().width;
 }
@@ -36,7 +36,9 @@ function getBarWeight(barIndex, mouseBarIndex) {
   const gaussian = Math.exp(
     -(distance * distance) / (2 * WAVE_BARS_SIGMA * WAVE_BARS_SIGMA)
   );
-  return WAVE_BARS_BASE_WEIGHT + (WAVE_BARS_PEAK_WEIGHT - WAVE_BARS_BASE_WEIGHT) * gaussian;
+  return (
+    WAVE_BARS_BASE_WEIGHT + (WAVE_BARS_PEAK_WEIGHT - WAVE_BARS_BASE_WEIGHT) * gaussian
+  );
 }
 
 function getPointerBarIndex(clientY, rectHeight, rectTop) {
@@ -48,26 +50,26 @@ function getPointerBarIndex(clientY, rectHeight, rectTop) {
 }
 
 /**
- * Cabecera con barras animadas que reaccionan al puntero y botones de scroll a las secciones de la home.
- * Si el usuario está en otra página, navega a la home y le indica la sección a la que ir.
- * @param {((widthPx: number | null) => void)} [onActionsInnerWidthChange] - Callback con el ancho en px del bloque de acciones (para alinear otros elementos).
- * @returns {JSX.Element}
+ * Animated header bars that react to pointer position, with section
+ * navigation buttons. Navigates to the home page when on a different route
+ * and stores the target section for scroll-after-load.
+ * @param {((widthPx: number | null) => void)} [onActionsInnerWidthChange]
  */
 export default function WaveBars({ onActionsInnerWidthChange }) {
   const containerRef = useRef(null);
   const actionsInnerRef = useRef(null);
   const [mouseBarIndex, setMouseBarIndex] = useState(null);
-  const [actionsInnerWidthPx, setActionsInnerWidthPx] = useState(null);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
 
-  // Recalculate actions-inner width when the element mounts, labels change, or container resizes
+  // Recalculate actions-inner width on mount, language change, or resize
   useEffect(() => {
     const el = actionsInnerRef.current;
     if (!el) return;
 
     const updateWidth = () => {
       const width = getActionsInnerWidth(el);
-      setActionsInnerWidthPx(width);
       onActionsInnerWidthChange?.(width ?? null);
     };
 
@@ -77,15 +79,16 @@ export default function WaveBars({ onActionsInnerWidthChange }) {
     resizeObserver.observe(el);
 
     return () => resizeObserver.disconnect();
-  }, [t("home.sectionExperience"), t("home.sectionEducation"), onActionsInnerWidthChange]);
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
+  }, [i18n.language, onActionsInnerWidthChange]);
 
   const handleSectionClick = useCallback(
     (sectionId) => {
       if (pathname === "/") {
         const el = document.getElementById(sectionId);
-        if (el) requestAnimationFrame(() => el.scrollIntoView({ behavior: "smooth", block: "start" }));
+        if (el)
+          requestAnimationFrame(() =>
+            el.scrollIntoView({ behavior: "smooth", block: "start" })
+          );
       } else {
         sessionStorage.setItem(SCROLL_TO_SECTION_KEY, sectionId);
         navigate("/");
@@ -94,17 +97,18 @@ export default function WaveBars({ onActionsInnerWidthChange }) {
     [pathname, navigate]
   );
 
-  const updateFromPointer = (clientY) => {
+  const updateFromPointer = useCallback((clientY) => {
     const container = containerRef.current;
     if (!container) return;
 
     const rect = container.getBoundingClientRect();
     const height = rect.height || container.offsetHeight;
     setMouseBarIndex(getPointerBarIndex(clientY, height, rect.top));
-  };
+  }, []);
 
   const weights = useMemo(
-    () => Array.from({ length: WAVE_BARS_COUNT }, (_, i) => getBarWeight(i, mouseBarIndex)),
+    () =>
+      Array.from({ length: WAVE_BARS_COUNT }, (_, i) => getBarWeight(i, mouseBarIndex)),
     [mouseBarIndex]
   );
 

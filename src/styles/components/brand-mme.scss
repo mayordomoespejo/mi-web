@@ -1,6 +1,7 @@
 @use "../abstracts/variables" as *;
 
-// Brand "mme": cada letra es la inicial; al hacer clic se despliega la palabra. Es un botón, no un enlace.
+// Brand "mme": each letter is an initial; on click the full word expands.
+// It's a button, not a link.
 .brand-mme {
   display: inline-flex;
   align-items: flex-end;
@@ -9,8 +10,8 @@
   font-weight: 700;
   color: $color-text;
   text-decoration: none;
-  transition: opacity 0.2s ease;
-  // Reset estilos nativos del botón para que se vea como el brand
+  transition: opacity $transition-base;
+  // Reset native button styles for brand appearance
   border: none;
   padding: 0;
   background: none;
@@ -47,11 +48,11 @@
   opacity: 0;
   padding-left: 0;
   transition:
-    max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-    opacity 0.2s ease,
-    padding-left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    max-width 0.4s $ease-out-smooth,
+    opacity $transition-base,
+    padding-left 0.4s $ease-out-smooth;
 
-  // Desplegado al hacer clic (clase .brand-mme--expanded), no con hover.
+  // Expanded on click (class .brand-mme--expanded), not on hover.
   .brand-mme--expanded & {
     max-width: 12ch;
     opacity: 1;

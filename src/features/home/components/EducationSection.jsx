@@ -3,8 +3,8 @@ import { getEducation } from "@/services/profileApi";
 import EducationCard from "./EducationCard";
 
 /**
- * Sección de formación para la Home.
- * Stacking effect: primera card sticky; la segunda hace scroll por encima de la primera.
+ * Education section for the Home page.
+ * Vertical carousel: each card is sticky and the next one stacks on top on scroll.
  */
 export default function EducationSection() {
   const { data, isLoading } = useQuery({
@@ -17,13 +17,7 @@ export default function EducationSection() {
   return (
     <div className="education-section">
       {data.map((item, index) => (
-        <EducationCard
-          key={item.id}
-          item={item}
-          index={index}
-          sticky={index === 0}
-          stacksOnTop={index > 0}
-        />
+        <EducationCard key={item.id} item={item} index={index} total={data.length} />
       ))}
     </div>
   );

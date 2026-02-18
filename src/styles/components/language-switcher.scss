@@ -14,14 +14,14 @@
   padding: 0.2rem 0.45rem;
   font-size: 0.75rem;
   cursor: pointer;
-  transition: opacity 0.2s ease;
+  transition: opacity $transition-base;
 }
 
 .language-switcher__btn:hover {
   opacity: $hover-opacity-soft;
 }
 
-.language-switcher__btn.is-active {
+.language-switcher__btn--active {
   background: $color-primary;
   border-color: $color-primary;
   color: $color-tertiary;

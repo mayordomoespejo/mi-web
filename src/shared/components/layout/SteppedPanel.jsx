@@ -3,8 +3,8 @@ import BrandMme from "./BrandMme";
 import LanguageSwitcher from "./LanguageSwitcher";
 
 /**
- * Panel con borde inferior escalonado: brand "mme" y rol a la izquierda, selector de idioma a la derecha.
- * @returns {JSX.Element}
+ * Panel with stepped bottom border: brand "mme" and role on the left,
+ * language switcher on the right.
  */
 export default function SteppedPanel() {
   const { t } = useTranslation();

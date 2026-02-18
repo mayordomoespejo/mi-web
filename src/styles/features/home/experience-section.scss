@@ -10,63 +10,18 @@
   margin-top: $space-12;
 }
 
-.experience-job-card {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: $space-8;
-}
-
-.experience-job-card__info {
-  flex: 0 1 475px;
-  max-width: 575px;
-  min-width: 0;
-}
-
-.experience-job-card__wheel {
-  flex: 1;
-  min-width: 0;
-}
-
-.experience-job-card__meta {
-  display: flex;
-  align-items: center;
-  gap: $space-3;
-  margin-bottom: $space-3;
-}
-
-.experience-job-card__dates,
-.experience-job-card__sep,
-.experience-job-card__state {
-  font-size: 0.875rem;
-  color: $color-quaternary;
-}
-
-.experience-job-card__company {
-  font-size: clamp(1.25rem, 2.5vw, 1.6rem);
-  font-weight: 700;
-  color: $color-text;
-  margin: 0 0 $space-2;
-  line-height: 1.2;
-}
-
-.experience-job-card__role {
-  font-family: $font-main;
-  font-size: 0.875rem;
-  color: $color-quaternary;
-  margin: 0;
-}
-
+// Scroll-triggered reveal animation
 .experience-section [data-reveal] {
   opacity: 0;
   transform: translateY(18px);
+  will-change: opacity, transform;
   transition:
-    opacity 0.55s ease,
-    transform 0.55s ease;
+    opacity $transition-reveal,
+    transform $transition-reveal;
   transition-delay: var(--delay, 0s);
 }
 
-.experience-section [data-reveal].is-visible {
+.experience-section [data-reveal].experience-job-card--visible {
   opacity: 1;
   transform: none;
 }

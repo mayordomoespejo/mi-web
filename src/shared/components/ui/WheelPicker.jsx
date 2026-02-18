@@ -85,28 +85,34 @@ export default function WheelPicker({ items, ariaLabel }) {
   }, []);
 
   // ─── Drag helpers ────────────────────────────────────────────────────────
-  const onDragStart = useCallback((clientY) => {
-    stopLoop();
-    isDragging.current = true;
-    velocity.current = 0;
-    isSnapping.current = false;
-    scrollTarget.current = Math.round(pos.current);
-    dragSamples.current = [{ pos: pos.current, time: performance.now() }];
-    wrapperRef.current._lastY = clientY;
-  }, [stopLoop]);
+  const onDragStart = useCallback(
+    (clientY) => {
+      stopLoop();
+      isDragging.current = true;
+      velocity.current = 0;
+      isSnapping.current = false;
+      scrollTarget.current = Math.round(pos.current);
+      dragSamples.current = [{ pos: pos.current, time: performance.now() }];
+      wrapperRef.current._lastY = clientY;
+    },
+    [stopLoop]
+  );
 
-  const onDragMove = useCallback((clientY) => {
-    if (!isDragging.current) return;
-    const dy = clientY - wrapperRef.current._lastY;
-    wrapperRef.current._lastY = clientY;
-    pos.current -= dy * DRAG_SENSITIVITY;
+  const onDragMove = useCallback(
+    (clientY) => {
+      if (!isDragging.current) return;
+      const dy = clientY - wrapperRef.current._lastY;
+      wrapperRef.current._lastY = clientY;
+      pos.current -= dy * DRAG_SENSITIVITY;
 
-    const now = performance.now();
-    dragSamples.current.push({ pos: pos.current, time: now });
-    if (dragSamples.current.length > VELOCITY_SAMPLES) dragSamples.current.shift();
+      const now = performance.now();
+      dragSamples.current.push({ pos: pos.current, time: now });
+      if (dragSamples.current.length > VELOCITY_SAMPLES) dragSamples.current.shift();
 
-    rerender();
-  }, [rerender]);
+      rerender();
+    },
+    [rerender]
+  );
 
   const onDragEnd = useCallback(() => {
     if (!isDragging.current) return;

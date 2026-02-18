@@ -30,8 +30,14 @@
 .home-page__experience {
   position: relative;
   flex-shrink: 0;
-  min-height: calc(100dvh - var(--layout-header-height, 0px) + var(--layout-panel-height, 84.75px) + #{$space-5});
-  min-height: calc(100vh - var(--layout-header-height, 0px) + var(--layout-panel-height, 84.75px) + #{$space-5});
+  min-height: calc(
+    100dvh - var(--layout-header-height, 0px) + var(--layout-panel-height, 84.75px) +
+      #{$space-5}
+  );
+  min-height: calc(
+    100vh - var(--layout-header-height, 0px) + var(--layout-panel-height, 84.75px) +
+      #{$space-5}
+  );
   width: 100%;
   box-sizing: border-box;
   display: flex;
@@ -58,8 +64,14 @@
 .home-page__education {
   position: relative;
   flex-shrink: 0;
-  min-height: calc(100vh - var(--layout-header-height, 0px) + var(--layout-panel-height, 84.75px) + #{$space-5});
-  min-height: calc(100dvh - var(--layout-header-height, 0px) + var(--layout-panel-height, 84.75px) + #{$space-5});
+  min-height: calc(
+    100vh - var(--layout-header-height, 0px) + var(--layout-panel-height, 84.75px) +
+      #{$space-5}
+  );
+  min-height: calc(
+    100dvh - var(--layout-header-height, 0px) + var(--layout-panel-height, 84.75px) +
+      #{$space-5}
+  );
   width: 100%;
   box-sizing: border-box;
   display: flex;

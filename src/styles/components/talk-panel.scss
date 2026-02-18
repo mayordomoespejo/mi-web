@@ -1,14 +1,14 @@
 @use "../abstracts/variables" as *;
 @use "../abstracts/mixins" as *;
 
-// Wrapper: ocupa el hueco en el layout, ancla la esquina superior derecha
+// Wrapper: fills the layout slot, anchored to the top-right corner
 .talk-panel {
   flex-shrink: 0;
   position: relative;
   height: var(--layout-panel-height, 80px);
   min-height: 80px;
 
-  // Body: solo crece hacia abajo, ancho fijo
+  // Body: only grows downward, fixed width
   &__body {
     position: absolute;
     top: 0;
@@ -26,7 +26,8 @@
     overflow: hidden;
     z-index: 20;
     gap: $space-2;
-    transition: height 0.35s ease;
+    transition: height $transition-slow;
+    will-change: height;
 
     @media (max-width: 767px) {
       padding-inline: $layout-padding-horizontal;
@@ -37,7 +38,7 @@
     }
   }
 
-  // Links de contacto: en el flujo flex, separados del "hablemos"
+  // Contact links: in the flex flow, separated from the "let's talk" label
   &__contacts {
     display: flex;
     flex-direction: column;
@@ -56,7 +57,10 @@
       text-decoration: none;
       text-align: right;
       padding: $space-2 0;
-      transition: color 0.2s ease, transform 0.12s ease-out, opacity 0.12s ease-out;
+      transition:
+        color $transition-base,
+        transform $transition-fast,
+        opacity $transition-fast;
 
       &:active {
         transform: scale(0.96);
@@ -80,14 +84,14 @@
     font-weight: 500;
     color: $color-primary;
     letter-spacing: 0.02em;
-    transition: color 0.2s ease;
+    transition: color $transition-base;
   }
 
   &--experience &__text {
     color: $color-secondary;
   }
 
-  // Drag handle: zona amplia en la esquina inferior izquierda para arrastrar
+  // Drag handle: wide touch target at the bottom-left corner
   &__drag-handle {
     position: absolute;
     left: 0;
@@ -110,7 +114,9 @@
     width: 1rem;
     height: 1rem;
     color: $color-primary;
-    transition: color 0.2s ease, transform 0.35s ease;
+    transition:
+      color $transition-base,
+      transform $transition-slow;
     transform: rotate(135deg);
     pointer-events: none;
 

@@ -1,10 +1,11 @@
+import { memo } from "react";
 import { useTranslation } from "react-i18next";
 
 /**
- * Convierte el id del ítem de educación (kebab-case) a la clave i18n (camelCase).
- * Ej: "daw-ilerna" -> "dawIlerna", "bach-ricardo-ortega" -> "bachRicardoOrtega"
- * @param {string} id - Id del ítem (p. ej. del JSON de educación).
- * @returns {string} Clave para home.education[key].
+ * Converts an education item id (kebab-case) to its i18n key (camelCase).
+ * E.g. "daw-ilerna" → "dawIlerna", "bach-ricardo-ortega" → "bachRicardoOrtega"
+ * @param {string} id - Item id from the education JSON.
+ * @returns {string} Key for home.education[key].
  */
 function idToI18nKey(id) {
   if (!id || typeof id !== "string") return "";
@@ -15,19 +16,14 @@ function idToI18nKey(id) {
 }
 
 /**
- * Card de formación. Con sticky=true (segunda card) se superpone a la anterior al hacer scroll (efecto wheel).
+ * Education card with vertical carousel effect.
+ * Each card is sticky and stacks on top of the previous one on scroll.
  *
- * @param {Object} item - Datos del ítem: { id, title, center, dates } (title/center/dates pueden venir del API; se sobrescriben con i18n si existen).
- * @param {number} index - Índice (0-based) para mostrar E/001, E/002.
- * @param {boolean} [sticky=false] - Si es true, la card se queda fija al hacer scroll (primera card).
- * @param {boolean} [stacksOnTop=false] - Si es true, la card tiene z-index mayor y hace scroll por encima de la sticky.
+ * @param {Object} item - Data: { id, title, center, dates }.
+ * @param {number} index - 0-based index for the E/001, E/002 label.
+ * @param {number} total - Total cards for z-index calculation.
  */
-export default function EducationCard({
-  item,
-  index,
-  sticky = false,
-  stacksOnTop = false
-}) {
+const EducationCard = memo(function EducationCard({ item, index, total }) {
   const { t } = useTranslation();
   const i18nKey = idToI18nKey(item.id);
   const title = i18nKey
@@ -44,7 +40,11 @@ export default function EducationCard({
 
   return (
     <article
-      className={`education-card${sticky ? " education-card--sticky" : ""}${stacksOnTop ? " education-card--stacks-on-top" : ""}`}
+      className="education-card"
+      style={{
+        "--card-index": index,
+        "--card-total": total
+      }}
     >
       <div className="education-card__header">
         <span className="education-card__id" aria-hidden="true">
@@ -53,11 +53,12 @@ export default function EducationCard({
         <h2 className="education-card__title">{title}</h2>
       </div>
       <div className="education-card__separator" aria-hidden="true" />
-      {/* Cuerpo: centro, fechas y opcionalmente CTA */}
       <div className="education-card__body">
         <p className="education-card__center">{center}</p>
         <p className="education-card__dates">{dates}</p>
       </div>
     </article>
   );
-}
+});
+
+export default EducationCard;

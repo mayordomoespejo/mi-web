@@ -1,10 +1,10 @@
+import { memo } from "react";
 import { useTranslation } from "react-i18next";
 
 /**
- * Pie de página con copyright y nombre del autor.
- * @returns {JSX.Element}
+ * Page footer with copyright and author name.
  */
-export default function Footer() {
+const Footer = memo(function Footer() {
   const { t } = useTranslation();
   return (
     <footer className="footer">
@@ -13,4 +13,6 @@ export default function Footer() {
       </div>
     </footer>
   );
-}
+});
+
+export default Footer;

@@ -1,28 +1,21 @@
 @use "../../abstracts/variables" as *;
 
 .education-card {
+  --_offset: calc(var(--card-index, 0) * 1.5rem);
+
   display: flex;
   flex-direction: column;
-  position: relative;
+  position: sticky;
+  top: calc(var(--layout-header-height, 0px) + var(--_offset));
+  z-index: calc(var(--card-index, 0) + 1);
   font-family: $font-code;
   background-color: $color-bg;
   padding: $space-8;
   gap: $space-5;
+  box-shadow: $shadow-card;
   transition:
     box-shadow 0.35s ease,
     transform 0.35s ease;
-}
-
-.education-card--sticky {
-  position: sticky;
-  top: var(--layout-header-height, 0);
-  z-index: 1;
-  box-shadow: $shadow-card;
-}
-
-.education-card--stacks-on-top {
-  z-index: 2;
-  box-shadow: $shadow-card;
 }
 
 .education-card__header {

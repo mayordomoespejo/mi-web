@@ -2,10 +2,10 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 /**
- * Brand "mme": iniciales que al hacer clic despliegan/pliegan la palabra completa. No es un enlace.
+ * Brand "mme": initials that expand/collapse to the full word on click.
+ * Not a navigation link.
  * @param {Object} props
- * @param {((e: React.MouseEvent) => void)|undefined} props.onClick - Callback opcional al hacer clic (p. ej. cerrar menú y scroll).
- * @returns {JSX.Element}
+ * @param {((e: React.MouseEvent) => void)|undefined} props.onClick - Optional callback on click.
  */
 export default function BrandMme({ onClick }) {
   const { t } = useTranslation();
@@ -25,15 +25,15 @@ export default function BrandMme({ onClick }) {
   return (
     <button
       type="button"
-      className={`brand-mme ${isExpanded ? "brand-mme--expanded" : ""}`}
+      className={`brand-mme${isExpanded ? " brand-mme--expanded" : ""}`}
       onClick={handleClick}
       aria-label={t("common.brandName").toLowerCase()}
       aria-expanded={isExpanded}
     >
       {brandCells.map((cell, i) => (
         <span
-          key={i}
-          className={`brand-mme__cell ${cell.word ? "" : "brand-mme__cell--no-word"}`}
+          key={`${cell.letter}-${i}`}
+          className={`brand-mme__cell${cell.word ? "" : " brand-mme__cell--no-word"}`}
         >
           <span className="brand-mme__initial" aria-hidden="true">
             {cell.letter}

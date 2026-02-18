@@ -2,7 +2,6 @@
 @use "../abstracts/variables" as *;
 
 // Animation timing: all in CSS for performance; JS only toggles --closing modifier
-$ease-out-smooth: cubic-bezier(0.16, 1, 0.3, 1);
 $welcome-bg-enter-duration: 0s;
 $welcome-enter-rotate-duration: 4.5s;
 $welcome-close-rotate-duration: 0.5s;
@@ -53,6 +52,7 @@ $welcome-close-total-duration: 0.75s;
   align-items: center;
   justify-content: center;
   transform-style: preserve-3d;
+  will-change: transform;
   animation: welcome-letter-block-enter $welcome-enter-rotate-duration $ease-out-smooth
     forwards;
   animation-delay: $welcome-bg-enter-duration;
@@ -96,6 +96,7 @@ $welcome-close-total-duration: 0.75s;
   text-transform: uppercase;
   text-align: center;
   transform-style: preserve-3d;
+  will-change: transform;
   animation: welcome-subtitle-enter-right $welcome-enter-rotate-duration $ease-out-smooth
     forwards;
   animation-delay: $welcome-bg-enter-duration;

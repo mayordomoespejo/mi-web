@@ -1,17 +1,17 @@
-// Fuente principal del proyecto (definida en _fonts.scss)
+// Primary project font (defined in _fonts.scss)
 $font-main: "SuisseIntlMono", "Courier New", monospace;
 $font-heading: "SuisseIntlMono", "Courier New", monospace;
-// Fuente secundaria: evoca código/IDE; usada en secciones de contenido
+// Secondary font: code/IDE feel; used in content sections
 $font-code: "JetBrains Mono", "SuisseIntlMono", monospace;
 
-// Paleta base
+// Base palette
 $color-primary: #bf4646;
 $color-secondary: #eddcc6;
 $color-tertiary: #fff4ea;
 $color-quaternary: #7eacb5;
 $color-text: #050505;
 
-// Colores de interfaz derivados de la paleta
+// Derived UI colors
 $color-bg: $color-primary;
 $color-surface: $color-secondary;
 $color-muted: rgba($color-text, 0.66);
@@ -19,15 +19,15 @@ $color-border: rgba($color-text, 0.18);
 $color-overlay: rgba($color-text, 0.55);
 $color-danger: #9d3434;
 
-// Estados
+// States
 $hover-opacity-soft: 0.82;
 $hover-opacity-strong: 0.72;
 $focus-ring-color: rgba($color-quaternary, 0.45);
 
-// Header y footer comparten este fondo (mismo aspecto visual)
+// Header and footer share this background
 $color-header-footer: $color-primary;
 
-// Brand / welcome: principal y texto
+// Brand / welcome: primary and text
 $color-brand: $color-primary;
 $color-brand-text: $color-text;
 
@@ -47,7 +47,14 @@ $space-9: 2.25rem;
 $space-10: 2.5rem;
 $space-12: 3rem;
 
-// Padding horizontal del layout (contenedor, stepped-panel en móvil, etc.)
+// Horizontal layout padding (container, stepped-panel on mobile, etc.)
 $layout-padding-horizontal: 4%;
 
 $shadow-card: 0 10px 28px rgba($color-text, 0.08);
+
+// Shared transition timings (reuse across component stylesheets)
+$ease-out-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+$transition-fast: 0.12s ease-out;
+$transition-base: 0.2s ease;
+$transition-slow: 0.35s ease;
+$transition-reveal: 0.55s ease;

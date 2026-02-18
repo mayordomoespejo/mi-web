@@ -1,8 +1,8 @@
 @use "../abstracts/variables" as *;
 
-// ─── Contenedor / ventana de la rueda ────────────────────────────────────────
-// 248px: el ítem activo queda centrado y los vecinos ±2 asoman visibles;
-// los ±3 quedan fuera del clip de overflow:hidden.
+// ─── Container / wheel viewport ─────────────────────────────────────────────
+// 248px: the active item is centered and ±2 neighbors are visible;
+// ±3 items fall outside the overflow:hidden clip.
 .wheel-picker {
   position: relative;
   height: 248px;
@@ -15,7 +15,7 @@
   }
 }
 
-// ─── Cada ítem simulado en la superficie del cilindro ────────────────────────
+// ─── Each item simulated on the cylinder surface ────────────────────────────
 .wheel-picker__item {
   position: absolute;
   top: 50%;
@@ -31,8 +31,8 @@
   will-change: transform, opacity;
 }
 
-// ─── Flecha fija estilo "ruleta de la suerte" ────────────────────────────────
-// Se posiciona a la izquierda del selector y rota con la física de la rueda.
+// ─── Fixed arrow (slot-machine style) ───────────────────────────────────────
+// Positioned to the left of the selector; rotates with wheel physics.
 .wheel-picker__arrow {
   position: absolute;
   top: 50%;
@@ -42,7 +42,7 @@
   display: flex;
   align-items: center;
   pointer-events: none;
-  transform-origin: 30% 50%; // pivota cerca de la base, no del centro
+  transform-origin: 30% 50%; // pivots near the base, not the center
 
   svg {
     height: 12px;
@@ -50,8 +50,8 @@
   }
 }
 
-// ─── Degradados: ocultan los vecinos dejando solo el ítem activo visible ──────
-// Tamaño generoso (60px) para que el fade empiece bien antes del ítem vecino.
+// ─── Fade gradients: hide neighbors, only the active item fully visible ─────
+// Generous size (60px) so the fade starts well before the neighbor item.
 .wheel-picker__fade {
   position: absolute;
   left: 0;
@@ -71,7 +71,7 @@
   }
 }
 
-// ─── Líneas que enmarcan el ítem seleccionado (estilo iOS picker) ─────────────
+// ─── Selection lines framing the active item (iOS picker style) ─────────────
 .wheel-picker__selector {
   position: absolute;
   top: 50%;

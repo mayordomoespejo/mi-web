@@ -1,13 +1,14 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { getExperience } from "@/services/profileApi";
+import { useRevealOnScroll } from "@/shared/hooks";
 import ExperienceJobCard from "./ExperienceJobCard";
 
 /**
- * Sección de experiencia para la Home.
- * Muestra empresa, rol, fechas y responsabilidades con WheelPicker 3D.
- * Items with [data-reveal] animate in when entering view and out on reverse scroll.
+ * Experience section for the Home page.
+ * Displays company, role, dates and responsibilities with a 3D WheelPicker.
+ * Items with [data-reveal] animate in/out via IntersectionObserver.
  */
 export default function ExperienceSection() {
   const { t } = useTranslation();
@@ -17,23 +18,7 @@ export default function ExperienceSection() {
   });
   const containerRef = useRef(null);
 
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    const items = el.querySelectorAll("[data-reveal]");
-    if (!items.length) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          entry.target.classList.toggle("is-visible", entry.isIntersecting);
-        });
-      },
-      { threshold: 0.2, rootMargin: "-25% 0px -25% 0px" }
-    );
-    items.forEach((item) => observer.observe(item));
-    return () => observer.disconnect();
-  }, [data]);
+  useRevealOnScroll(containerRef, "experience-job-card--visible", data);
 
   if (isLoading || !data?.length) return null;
 

@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useState } from "react";
+import { Fragment, useCallback, useMemo, useState } from "react";
 
 function wrapWordsInSpans(segment, keyPrefix, wordIndexRef, readUpToIndex, onWordEnter) {
   if (!segment || typeof segment !== "string") return [];
@@ -75,6 +75,11 @@ export default function BioKaraoke({ text, phrases }) {
     setReadUpToIndex(-1);
   }, []);
 
+  const renderedBio = useMemo(
+    () => renderHighlightedBio(text, phrases, readUpToIndex, handleWordEnter),
+    [text, phrases, readUpToIndex, handleWordEnter]
+  );
+
   return (
     <p
       className="home-bio"
@@ -85,7 +90,7 @@ export default function BioKaraoke({ text, phrases }) {
       role="button"
       tabIndex={0}
     >
-      {renderHighlightedBio(text, phrases, readUpToIndex, handleWordEnter)}
+      {renderedBio}
     </p>
   );
 }

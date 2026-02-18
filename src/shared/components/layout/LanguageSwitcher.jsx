@@ -1,10 +1,9 @@
 import { useTranslation } from "react-i18next";
 
 /**
- * Botones para cambiar idioma (es/en). Opcionalmente notifica al cambiar (p. ej. cerrar menú).
+ * Language toggle buttons (es/en). Optionally notifies parent on change.
  * @param {Object} props
- * @param {(() => void)|undefined} props.onLanguageChange - Callback opcional al cambiar de idioma.
- * @returns {JSX.Element}
+ * @param {(() => void)|undefined} props.onLanguageChange - Optional callback on language change.
  */
 export default function LanguageSwitcher({ onLanguageChange }) {
   const { t, i18n } = useTranslation();
@@ -22,14 +21,14 @@ export default function LanguageSwitcher({ onLanguageChange }) {
     >
       <button
         type="button"
-        className={`language-switcher__btn ${i18n.resolvedLanguage === "es" ? "is-active" : ""}`}
+        className={`language-switcher__btn${i18n.resolvedLanguage === "es" ? " language-switcher__btn--active" : ""}`}
         onClick={() => changeLanguage("es")}
       >
         {t("navbar.spanish")}
       </button>
       <button
         type="button"
-        className={`language-switcher__btn ${i18n.resolvedLanguage === "en" ? "is-active" : ""}`}
+        className={`language-switcher__btn${i18n.resolvedLanguage === "en" ? " language-switcher__btn--active" : ""}`}
         onClick={() => changeLanguage("en")}
       >
         {t("navbar.english")}

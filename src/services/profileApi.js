@@ -1,9 +1,9 @@
-// Datos desde mocks locales (sin API real ni simulaciones de red)
+// Data from local mocks (no real API or network simulation)
 import experience from "@/mocks/experience.json";
 import education from "@/mocks/education.json";
 
 /**
- * Devuelve la lista de experiencia laboral.
+ * Returns the list of work experience.
  * @returns {Promise<Array<{ id: string; company: string; role: string; roleKey?: string; startDate: string; endDate: string; responsibilities?: string[]; responsibilityKey?: string }>>}
  */
 export function getExperience() {
@@ -11,7 +11,7 @@ export function getExperience() {
 }
 
 /**
- * Devuelve la lista de formación académica.
+ * Returns the list of education/training.
  * @returns {Promise<Array<{ id: string; title: string; center: string; dates: string }>>}
  */
 export function getEducation() {

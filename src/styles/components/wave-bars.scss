@@ -32,6 +32,7 @@
     min-height: 4px;
     background: var(--wave-bars-bar);
     transition: flex-grow 0.2s ease-out;
+    will-change: flex-grow;
     flex-shrink: 0;
   }
 
@@ -96,7 +97,7 @@
   &__btn-text {
     display: inline-block;
     transition:
-      transform 0.12s ease-out,
-      opacity 0.12s ease-out;
+      transform $transition-fast,
+      opacity $transition-fast;
   }
 }

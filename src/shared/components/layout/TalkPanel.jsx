@@ -6,8 +6,8 @@ import { CONTACT_LINKS } from "@/core/constants";
 const SNAP_THRESHOLD = 0.4;
 
 /**
- * Panel "Hablemos": se despliega solo hacia abajo mostrando contactos.
- * Click o drag vertical desde la esquina del icono para expandir/colapsar.
+ * "Let's talk" panel: expands downward to reveal contact links.
+ * Click or vertical drag from the icon corner to expand/collapse.
  */
 const TalkPanel = forwardRef(function TalkPanel(
   { widthPx = null, isExperienceAtPanel = false },
@@ -29,12 +29,12 @@ const TalkPanel = forwardRef(function TalkPanel(
     [ref]
   );
 
-  /** Altura expandida = altura natural del body con todo su contenido */
+  /** Expanded height = natural body height with all its content. */
   const getExpandedHeight = useCallback(() => {
     const body = bodyRef.current;
     if (!body) return 250;
-    // Con justify-content: flex-end el overflow es negativo (arriba),
-    // así que scrollHeight no lo mide. Medimos con height: auto temporalmente.
+    // With justify-content: flex-end the overflow goes upward (negative),
+    // so scrollHeight doesn't measure it. Temporarily set height: auto.
     const prev = body.style.height;
     const prevTransition = body.style.transition;
     body.style.transition = "none";
@@ -42,7 +42,7 @@ const TalkPanel = forwardRef(function TalkPanel(
     const natural = body.offsetHeight;
     body.style.height = prev;
     body.style.transition = prevTransition;
-    // Forzar reflow para que no haya parpadeo
+    // Force reflow to prevent flicker
     void body.offsetHeight;
     return natural;
   }, []);
@@ -55,19 +55,19 @@ const TalkPanel = forwardRef(function TalkPanel(
     const from = body.offsetHeight;
     const to = isExpanded ? wrapper.offsetHeight : getExpandedHeight();
 
-    // Fijar altura actual en px, desactivar transición para forzar el punto de partida
+    // Lock current height in px, disable transition to set the start point
     body.style.transition = "none";
     body.style.height = `${from}px`;
-    // Forzar reflow para que el navegador registre el punto de partida
+    // Force reflow so the browser registers the start point
     void body.offsetHeight;
-    // Re-activar transición y animar al target
+    // Re-enable transition and animate to target
     body.style.transition = "";
     body.style.height = `${to}px`;
 
     setIsExpanded(!isExpanded);
   }, [isExpanded, getExpandedHeight]);
 
-  // --- Drag handlers (solo vertical) ---
+  // --- Drag handlers (vertical only) ---
 
   const handlePointerDown = useCallback((e) => {
     e.preventDefault();
@@ -82,27 +82,30 @@ const TalkPanel = forwardRef(function TalkPanel(
     dragRef.current = {
       startY: e.clientY,
       startHeight: body.getBoundingClientRect().height,
-      moved: false,
+      moved: false
     };
 
     body.style.transition = "none";
   }, []);
 
-  const handlePointerMove = useCallback((e) => {
-    const drag = dragRef.current;
-    const body = bodyRef.current;
-    const wrapper = wrapperRef.current;
-    if (!drag || !body || !wrapper) return;
+  const handlePointerMove = useCallback(
+    (e) => {
+      const drag = dragRef.current;
+      const body = bodyRef.current;
+      const wrapper = wrapperRef.current;
+      if (!drag || !body || !wrapper) return;
 
-    drag.moved = true;
+      drag.moved = true;
 
-    const deltaY = e.clientY - drag.startY;
-    const minH = wrapper.offsetHeight;
-    const maxH = getExpandedHeight();
-    const newH = Math.max(minH, Math.min(maxH, drag.startHeight + deltaY));
+      const deltaY = e.clientY - drag.startY;
+      const minH = wrapper.offsetHeight;
+      const maxH = getExpandedHeight();
+      const newH = Math.max(minH, Math.min(maxH, drag.startHeight + deltaY));
 
-    body.style.height = `${newH}px`;
-  }, [getExpandedHeight]);
+      body.style.height = `${newH}px`;
+    },
+    [getExpandedHeight]
+  );
 
   const handlePointerUp = useCallback(() => {
     const drag = dragRef.current;
@@ -124,7 +127,7 @@ const TalkPanel = forwardRef(function TalkPanel(
     const progress = (currentH - minH) / (maxH - minH || 1);
     const shouldExpand = progress > SNAP_THRESHOLD;
 
-    // Re-activar transición y animar al target
+    // Re-enable transition and animate to target
     body.style.transition = "";
     body.style.height = `${shouldExpand ? maxH : minH}px`;
 
@@ -136,11 +139,7 @@ const TalkPanel = forwardRef(function TalkPanel(
   const expandedClass = isExpanded ? " talk-panel__body--expanded" : "";
 
   return (
-    <div
-      ref={setRef}
-      className={`talk-panel${experienceClass}`}
-      style={wrapperStyle}
-    >
+    <div ref={setRef} className={`talk-panel${experienceClass}`} style={wrapperStyle}>
       <div
         ref={bodyRef}
         className={`talk-panel__body${expandedClass}`}
@@ -167,18 +166,14 @@ const TalkPanel = forwardRef(function TalkPanel(
           <ChevronRightIcon className="talk-panel__arrow" />
         </div>
 
-        {/* Contactos */}
+        {/* Contact links */}
         <nav
           className="talk-panel__contacts"
           aria-label={t("contact.title")}
           onClick={(e) => e.stopPropagation()}
         >
-          <a href={CONTACT_LINKS.phone}>
-            {t("contact.phone")}
-          </a>
-          <a href={CONTACT_LINKS.email}>
-            {t("contact.email")}
-          </a>
+          <a href={CONTACT_LINKS.phone}>{t("contact.phone")}</a>
+          <a href={CONTACT_LINKS.email}>{t("contact.email")}</a>
           <a href={CONTACT_LINKS.linkedin} target="_blank" rel="noreferrer">
             {t("contact.linkedin")}
           </a>

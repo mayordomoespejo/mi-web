@@ -6,7 +6,7 @@
   padding: $space-3 $space-5;
   font-weight: 600;
   cursor: pointer;
-  transition: 0.2s ease;
+  transition: $transition-base;
 }
 
 .btn:disabled {
