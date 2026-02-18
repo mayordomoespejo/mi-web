@@ -13,6 +13,7 @@ const SNAP_STIFFNESS = 0.15; // spring towards nearest item
 const SNAP_DAMPING = 0.7; // damping on the snap spring
 const DRAG_SENSITIVITY = 0.02; // px dragged → position units
 const VELOCITY_SAMPLES = 5; // recent samples for release velocity
+const SCROLL_THRESHOLD = 10; // min deltaY to trigger a step
 
 /**
  * Wheel Picker – infinite physics-based cylindrical wheel.
@@ -54,6 +55,7 @@ export default function WheelPicker({ items, ariaLabel }) {
         velocity.current = 0;
         isSnapping.current = false;
         rerender();
+        rafId.current = null;
         return; // stop loop
       }
     } else {
@@ -161,10 +163,23 @@ export default function WheelPicker({ items, ariaLabel }) {
     };
     const onTouchEnd = () => onDragEnd();
 
+    // Mouse wheel scroll – step one item at a time with snap animation
+    const onWheel = (e) => {
+      e.preventDefault();
+      if (Math.abs(e.deltaY) < SCROLL_THRESHOLD) return;
+      const direction = e.deltaY > 0 ? 1 : -1;
+      stopLoop();
+      velocity.current = 0;
+      scrollTarget.current = Math.round(pos.current) + direction;
+      isSnapping.current = true;
+      startLoop();
+    };
+
     el.addEventListener("mousedown", onMouseDown);
     el.addEventListener("touchstart", onTouchStart, { passive: true });
     el.addEventListener("touchmove", onTouchMove, { passive: false });
     el.addEventListener("touchend", onTouchEnd);
+    el.addEventListener("wheel", onWheel, { passive: false });
 
     return () => {
       stopLoop();
@@ -172,6 +187,7 @@ export default function WheelPicker({ items, ariaLabel }) {
       el.removeEventListener("touchstart", onTouchStart);
       el.removeEventListener("touchmove", onTouchMove);
       el.removeEventListener("touchend", onTouchEnd);
+      el.removeEventListener("wheel", onWheel);
     };
   }, [total, onDragStart, onDragMove, onDragEnd, startLoop, stopLoop]);
 

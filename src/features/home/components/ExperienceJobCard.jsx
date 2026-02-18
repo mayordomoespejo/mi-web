@@ -4,9 +4,8 @@ import WheelPicker from "@/shared/components/ui/WheelPicker";
 
 /**
  * Job card: dates, company, role and WheelPicker for responsibilities.
- * Root has [data-reveal]; parent ExperienceSection runs the IntersectionObserver.
  */
-const ExperienceJobCard = memo(function ExperienceJobCard({ job, display, index = 0 }) {
+const ExperienceJobCard = memo(function ExperienceJobCard({ job, display }) {
   const { t } = useTranslation();
 
   const isPresent =
@@ -14,11 +13,7 @@ const ExperienceJobCard = memo(function ExperienceJobCard({ job, display, index 
     job.endDate === t("home.endDatePresentEn");
 
   return (
-    <div
-      className="experience-job-card"
-      data-reveal
-      style={{ "--delay": `${index * 0.08}s` }}
-    >
+    <div className="experience-job-card">
       <div className="experience-job-card__info">
         <div className="experience-job-card__meta">
           <span className="experience-job-card__dates">{job.startDate}</span>

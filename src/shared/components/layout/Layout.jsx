@@ -20,6 +20,15 @@ export default function Layout() {
   const [actionsInnerWidthPx, setActionsInnerWidthPx] = useState(null);
   const talkPanelRef = useRef(null);
 
+  useEffect(() => {
+    if (actionsInnerWidthPx != null && layoutRef.current) {
+      layoutRef.current.style.setProperty(
+        "--actions-inner-width",
+        `${actionsInnerWidthPx}px`
+      );
+    }
+  }, [actionsInnerWidthPx]);
+
   const { sectionAtWavebar, isAtTalkPanel } = useScrollSpy(
     HOME_WAVEBAR_SECTION_IDS,
     HOME_SECTION_IDS.EXPERIENCE,
