@@ -37,6 +37,9 @@ const EducationPocket = memo(function EducationPocket({ index, children }) {
     measure();
     const ro = new ResizeObserver(measure);
     ro.observe(pocket);
+    // Also observe the slider — its width depends on --actions-inner-width,
+    // so it resizes when the wavebar actions change (language switch, etc.)
+    if (sliderRef.current) ro.observe(sliderRef.current);
     return () => ro.disconnect();
   }, []);
 
