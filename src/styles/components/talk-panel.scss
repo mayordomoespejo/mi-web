@@ -1,0 +1,99 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+// Wrapper: ocupa el hueco en el layout, ancla la esquina superior derecha
+.talk-panel {
+  flex-shrink: 0;
+  position: relative;
+  height: var(--layout-panel-height, 80px);
+  min-height: 80px;
+
+  // Body: se posiciona desde top-right y crece hacia la izquierda y abajo
+  &__body {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: $color-text;
+    padding-block: $space-3;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    box-sizing: border-box;
+    cursor: pointer;
+    overflow: hidden;
+    z-index: 20;
+    transition:
+      width 0.35s ease,
+      height 0.35s ease;
+
+    @media (max-width: 767px) {
+      padding-inline: $layout-padding-horizontal;
+    }
+
+    @include up(md) {
+      padding-inline: $space-4;
+    }
+
+    &--expanded {
+      width: min(400px, 50vw);
+      height: min(300px, 50vh);
+    }
+  }
+
+  &__text {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: $color-primary;
+    letter-spacing: 0.02em;
+    transition: color 0.2s ease;
+  }
+
+  &--experience &__text {
+    color: $color-secondary;
+  }
+
+  // Drag handle: zona amplia en la esquina inferior izquierda para arrastrar
+  &__drag-handle {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    cursor: grab;
+    touch-action: none;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding: 1px;
+
+    &:active {
+      cursor: grabbing;
+    }
+  }
+
+  &__arrow {
+    width: 1rem;
+    height: 1rem;
+    color: $color-primary;
+    transition: color 0.2s ease, transform 0.35s ease;
+    transform: rotate(135deg);
+    pointer-events: none;
+
+    svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &__body--expanded &__arrow {
+    transform: rotate(-45deg);
+  }
+
+  &--experience &__arrow {
+    color: $color-secondary;
+  }
+}

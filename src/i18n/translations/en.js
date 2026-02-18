@@ -34,6 +34,8 @@ const en = {
     bioHighlightPhrases: ["Frontend Developer", "React Native", "React"],
     scrollToNext: "Go to next section",
     talk: "Let's talk",
+    talkOpen: "Open Let's talk panel",
+    talkClose: "Close panel",
     wheelPickerResponsibilitiesAria: "Responsibilities",
     education: {
       dawIlerna: {

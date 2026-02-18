@@ -4,6 +4,7 @@ import {
   WHEEL_PICKER_RADIUS,
   WHEEL_PICKER_ITEM_HEIGHT
 } from "@/core/constants";
+import ChevronRightIcon from "@/shared/components/ui/icons/ChevronRightIcon";
 
 // ─── Physics constants ───────────────────────────────────────────────────────
 const FRICTION = 0.94; // per-frame multiplier (lower = more friction)
@@ -227,7 +228,7 @@ export default function WheelPicker({ items, ariaLabel }) {
         aria-hidden="true"
         style={{ transform: `translateY(-50%) rotate(${arrowRotation}deg)` }}
       >
-        ›
+        <ChevronRightIcon />
       </span>
 
       <div className="wheel-picker__fade wheel-picker__fade--top" aria-hidden="true" />

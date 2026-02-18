@@ -39,10 +39,15 @@
   left: 0;
   z-index: 4;
   color: $color-primary;
-  font-size: 1.3rem;
-  line-height: 1;
+  display: flex;
+  align-items: center;
   pointer-events: none;
   transform-origin: 30% 50%; // pivota cerca de la base, no del centro
+
+  svg {
+    height: 12px;
+    width: auto;
+  }
 }
 
 // ─── Degradados: ocultan los vecinos dejando solo el ítem activo visible ──────
