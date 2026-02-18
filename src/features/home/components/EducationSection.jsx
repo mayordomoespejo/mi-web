@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getEducation } from "@/services/profileApi";
 import EducationCard from "./EducationCard";
+import EducationPocket from "./EducationPocket";
 
 /**
  * Education section for the Home page.
@@ -16,9 +17,13 @@ export default function EducationSection() {
 
   return (
     <div className="education-section">
-      {data.map((item, index) => (
-        <EducationCard key={item.id} item={item} index={index} total={data.length} />
-      ))}
+      <div className="education-section__cards">
+        {data.map((item, index) => (
+          <EducationPocket key={item.id} index={index}>
+            <EducationCard item={item} index={index} total={data.length} />
+          </EducationPocket>
+        ))}
+      </div>
     </div>
   );
 }

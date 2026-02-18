@@ -36,8 +36,6 @@ const EducationCard = memo(function EducationCard({ item, index, total }) {
     ? t(`home.education.${i18nKey}.dates`, { defaultValue: item.dates })
     : item.dates;
 
-  const sequence = String(index + 1).padStart(3, "0");
-
   return (
     <article
       className="education-card"
@@ -47,9 +45,6 @@ const EducationCard = memo(function EducationCard({ item, index, total }) {
       }}
     >
       <div className="education-card__header">
-        <span className="education-card__id" aria-hidden="true">
-          E/{sequence}
-        </span>
         <h2 className="education-card__title">{title}</h2>
       </div>
       <div className="education-card__separator" aria-hidden="true" />

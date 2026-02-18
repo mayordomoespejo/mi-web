@@ -10,3 +10,45 @@
   gap: $space-5;
   font-family: $font-code;
 }
+
+// Wrapper that contains only the pocket cards — slit and overlay are scoped to this height
+.education-section__cards {
+  --slit-width: 3px;
+
+  position: relative;
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+  overflow-x: clip;
+}
+
+// Overlay: covers the pocket area (right of the slit) to hide collapsed card content
+.education-section__cards::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: var(--actions-inner-width, 0px);
+  background: $color-bg;
+  z-index: 1;
+  pointer-events: none;
+}
+
+// Vertical slit — dramatic "cut" with left shadow
+.education-section__cards::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  // Keep slit within actionsInnerWidth (right edge at actionsInnerWidth from section edge)
+  right: calc(var(--actions-inner-width, 0px) - var(--slit-width));
+  width: var(--slit-width);
+  background: rgba($color-text, 0.10);
+  box-shadow:
+    -6px 0 14px rgba($color-text, 0.18),
+    -2px 0 5px rgba($color-text, 0.12);
+  pointer-events: none;
+  z-index: 2;
+}

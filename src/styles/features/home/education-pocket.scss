@@ -1,0 +1,56 @@
+@use "../../abstracts/variables" as *;
+
+.education-pocket {
+  position: relative;
+  width: 100%;
+}
+
+.education-pocket__slider {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  // Tab + content fit exactly in the area left of the slit
+  width: calc(100% - var(--actions-inner-width, 0px));
+  transition: transform $transition-slow;
+  will-change: transform;
+  cursor: grab;
+  touch-action: pan-y;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.education-pocket__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.education-pocket__tab {
+  position: relative;
+  z-index: 3;
+  flex-shrink: 0;
+  width: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.education-pocket__label {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  font-family: $font-code;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: $color-tertiary;
+  opacity: 0.6;
+  white-space: nowrap;
+  transition: opacity $transition-base;
+}
+
+.education-pocket:hover .education-pocket__label {
+  opacity: 1;
+}
