@@ -1,0 +1,111 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+// Forma con borde inferior escalonado. Va dentro de .container en el Layout para alinearse con el resto.
+.stepped-panel {
+  --panel-min-height: 80px;
+  --panel-padding-block: #{$space-4};
+  --panel-padding-inline: #{$space-5};
+  --separator-width: 2px;
+  --separator-segment-size: 4px;
+  --separator-gap-size: 4px;
+
+  width: 100%;
+  min-height: var(--panel-min-height);
+  border-radius: $radius-sm;
+  overflow: hidden;
+  flex-shrink: 0;
+
+  @include up(md) {
+    width: 35%;
+  }
+
+  &__inner {
+    width: 100%;
+    min-height: var(--panel-min-height);
+    background: $color-tertiary;
+    clip-path: polygon(
+      0 0,
+      100% 0,
+      100% 100%,
+      50% 100%,
+      50% 85%,
+      25% 85%,
+      25% 100%,
+      0 100%,
+      3% 100%,
+      0 87%
+    );
+    display: flex;
+    align-items: center;
+    padding: var(--panel-padding-block) var(--panel-padding-inline);
+    box-sizing: border-box;
+    overflow: visible; // Permite que el separador sobresalga sin recorte.
+  }
+
+  // Contenido: columna izquierda (mme + subtítulo) | separador | selector de idioma.
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: $space-5;
+  }
+
+  // Línea discontinua vertical: el pseudo-elemento llega al borde superior e inferior del panel.
+  &__separator {
+    position: relative;
+    align-self: stretch;
+    width: var(--separator-width);
+    flex-shrink: 0;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: calc(-1 * var(--panel-padding-block));
+      bottom: calc(-1 * var(--panel-padding-block));
+      background: repeating-linear-gradient(
+        to bottom,
+        $color-primary 0,
+        $color-primary var(--separator-segment-size),
+        transparent var(--separator-segment-size),
+        transparent calc(var(--separator-segment-size) + var(--separator-gap-size))
+      );
+    }
+  }
+
+  // Columna izquierda: mme arriba, subtítulo abajo.
+  &__left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $space-1;
+    min-width: 0;
+    flex: 1;
+  }
+
+  // Derecha del panel: botones de idioma en columna.
+  &__right {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: $space-2;
+
+    .language-switcher {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+
+  // Subtítulo (rol/título profesional), alineado a la derecha de la columna izquierda.
+  &__subtitle {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: $color-primary;
+    letter-spacing: 0.02em;
+    align-self: flex-end;
+  }
+}

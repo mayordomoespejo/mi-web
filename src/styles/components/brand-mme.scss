@@ -1,0 +1,68 @@
+@use "../abstracts/variables" as *;
+
+// Brand "mme": each letter is an initial; on click the full word expands.
+// It's a button, not a link.
+.brand-mme {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: $color-text;
+  text-decoration: none;
+  transition: opacity $transition-base;
+  // Reset native button styles for brand appearance
+  border: none;
+  padding: 0;
+  background: none;
+  font-family: inherit;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: none;
+    opacity: $hover-opacity-soft;
+  }
+}
+
+.brand-mme__cell {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: flex-end;
+  min-width: 0;
+}
+
+.brand-mme__initial {
+  flex-shrink: 0;
+  display: block;
+  line-height: 1.2;
+}
+
+.brand-mme__word-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  overflow: hidden;
+  white-space: nowrap;
+  min-width: 0;
+  max-width: 0;
+  opacity: 0;
+  padding-left: 0;
+  transition:
+    max-width 0.4s $ease-out-smooth,
+    opacity $transition-base,
+    padding-left 0.4s $ease-out-smooth;
+
+  // Expanded on click (class .brand-mme--expanded), not on hover.
+  .brand-mme--expanded & {
+    max-width: 12ch;
+    opacity: 1;
+    padding-left: 0.12em;
+  }
+}
+
+.brand-mme__word {
+  display: block;
+  line-height: 1.15;
+  user-select: none;
+  pointer-events: none;
+}

@@ -1,5 +1,60 @@
-.site-shell {
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+/* Layout: shell, header (wavebar + panel), main. CSS vars set by Layout.jsx for section min-heights. */
+.layout {
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
+  --layout-header-height: 0px;
+  --layout-wavebar-height: 0px;
+  --layout-panel-height: 84.75px;
+  padding-top: var(--layout-header-height);
+}
+
+.layout__header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+  background: transparent;
+}
+
+/* Wavebar alternative color (used when WAVEBAR_SPECIAL_SECTION_ID is at wavebar) */
+.layout__wavebar--alt .wave-bars {
+  background: $color-secondary;
+}
+
+.layout__wavebar--alt .wave-bars__block {
+  background: $color-secondary;
+}
+
+.layout__header .container.layout__panel-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: $space-4;
+}
+
+.layout__main {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+
+  @media (max-width: 767px) {
+    padding-inline: $layout-padding-horizontal;
+  }
+
+  @include up(md) {
+    width: 100%;
+  }
 }

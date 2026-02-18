@@ -1,16 +1,19 @@
-import apiClient from "./apiClient";
+// Data from local mocks (no real API or network simulation)
+import experience from "@/mocks/experience.json";
+import education from "@/mocks/education.json";
 
-export async function getExperience() {
-  const response = await apiClient.get("/experience");
-  return response.data;
+/**
+ * Returns the list of work experience.
+ * @returns {Promise<Array<{ id: string; company: string; role: string; roleKey?: string; startDate: string; endDate: string; responsibilities?: string[]; responsibilityKey?: string }>>}
+ */
+export function getExperience() {
+  return Promise.resolve(experience);
 }
 
-export async function getEducation() {
-  const response = await apiClient.get("/education");
-  return response.data;
-}
-
-export async function getProfileSummary() {
-  const response = await apiClient.get("/profile-summary");
-  return response.data;
+/**
+ * Returns the list of education/training.
+ * @returns {Promise<Array<{ id: string; title: string; center: string; dates: string }>>}
+ */
+export function getEducation() {
+  return Promise.resolve(education);
 }

@@ -2,9 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
-import App from "./app/App";
-import "./i18n";
-import "./styles/global.scss";
+import App from "@/app/App";
+import "@/i18n";
+import "@/styles/index.scss";
 
 const queryClient = new QueryClient();
 

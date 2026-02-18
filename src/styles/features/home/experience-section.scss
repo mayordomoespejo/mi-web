@@ -1,0 +1,27 @@
+@use "../../abstracts/variables" as *;
+
+.experience-section {
+  width: 100%;
+  padding-block: $space-12 $space-10;
+  font-family: $font-code;
+}
+
+.experience-section .experience-job-card + .experience-job-card {
+  margin-top: $space-12;
+}
+
+// Scroll-triggered reveal animation
+.experience-section [data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  will-change: opacity, transform;
+  transition:
+    opacity $transition-reveal,
+    transform $transition-reveal;
+  transition-delay: var(--delay, 0s);
+}
+
+.experience-section [data-reveal].experience-job-card--visible {
+  opacity: 1;
+  transform: none;
+}

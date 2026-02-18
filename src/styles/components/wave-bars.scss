@@ -1,0 +1,103 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+.wave-bars {
+  --wave-bars-bg: #{$color-primary};
+  --wave-bars-bar: #{$color-text};
+  --wave-bars-gap: 8px;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 30vh;
+  min-height: 30vh;
+  box-sizing: border-box;
+  background: var(--wave-bars-bg);
+  cursor: default;
+  pointer-events: auto;
+
+  &__bars {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--wave-bars-gap);
+    z-index: 1;
+  }
+
+  &__bar {
+    width: 100%;
+    flex-basis: 0;
+    min-height: 4px;
+    background: var(--wave-bars-bar);
+    transition: flex-grow 0.2s ease-out;
+    will-change: flex-grow;
+    flex-shrink: 0;
+  }
+
+  &__actions {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding-block: $space-3;
+    pointer-events: none;
+
+    @media (max-width: 767px) {
+      padding-inline: $layout-padding-horizontal;
+    }
+
+    @include up(md) {
+      padding-inline: calc((100% - min(100%, 1100px)) / 2);
+    }
+  }
+
+  &__actions-inner {
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+    width: max-content;
+  }
+
+  &__block {
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+    width: 100%;
+    padding: $space-2 $space-4;
+    box-sizing: border-box;
+    background: $color-bg;
+  }
+
+  &__btn {
+    font-family: $font-code;
+    pointer-events: auto;
+    padding: $space-2 0;
+    border: none;
+    background: transparent;
+    color: $color-text;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: right;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+    }
+
+    &:active .wave-bars__btn-text {
+      transform: scale(0.96);
+      opacity: 0.85;
+    }
+  }
+
+  &__btn-text {
+    display: inline-block;
+    transition:
+      transform $transition-fast,
+      opacity $transition-fast;
+  }
+}

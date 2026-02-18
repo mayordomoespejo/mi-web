@@ -1,0 +1,84 @@
+@use "../../abstracts/variables" as *;
+
+.education-card {
+  --_offset: calc(var(--card-index, 0) * 1.5rem);
+
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: calc(var(--layout-header-height, 0px) + var(--_offset));
+  z-index: calc(var(--card-index, 0) + 1);
+  font-family: $font-code;
+  background-color: $color-bg;
+  padding: $space-8;
+  gap: $space-5;
+  box-shadow: $shadow-card;
+  transition:
+    box-shadow 0.35s ease,
+    transform 0.35s ease;
+}
+
+.education-card__header {
+  display: flex;
+  align-items: baseline;
+  gap: $space-6;
+  flex-wrap: wrap;
+}
+
+.education-card__id {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: $color-muted;
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+
+.education-card__title {
+  font-family: $font-code;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: 700;
+  color: $color-text;
+  margin: 0;
+  line-height: 1.2;
+  flex: 1;
+  min-width: 0;
+}
+
+.education-card__separator {
+  --separator-width: 2px;
+  --separator-segment-size: 4px;
+  --separator-gap-size: 4px;
+
+  height: var(--separator-width);
+  border: none;
+  margin-inline: calc(-1 * $space-8);
+  margin-block: 0;
+  background: repeating-linear-gradient(
+    to right,
+    $color-tertiary 0,
+    $color-tertiary var(--separator-segment-size),
+    transparent var(--separator-segment-size),
+    transparent calc(var(--separator-segment-size) + var(--separator-gap-size))
+  );
+}
+
+.education-card__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: $space-2;
+}
+
+.education-card__center {
+  font-size: 1rem;
+  color: $color-text;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.education-card__dates {
+  font-size: 0.875rem;
+  color: $color-tertiary;
+  margin: 0;
+}

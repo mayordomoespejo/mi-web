@@ -1,0 +1,29 @@
+@use "../abstracts/variables" as *;
+
+.language-switcher {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+}
+
+.language-switcher__btn {
+  border: 1px solid $color-quaternary;
+  background: transparent;
+  color: $color-quaternary;
+  border-radius: $radius-sm;
+  padding: 0.2rem 0.45rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: opacity $transition-base;
+}
+
+.language-switcher__btn:hover {
+  opacity: $hover-opacity-soft;
+}
+
+.language-switcher__btn--active {
+  background: $color-primary;
+  border-color: $color-primary;
+  color: $color-tertiary;
+  font-weight: 600;
+}

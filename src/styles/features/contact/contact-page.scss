@@ -1,0 +1,13 @@
+@use "../../abstracts/variables" as *;
+
+.contact-page__card {
+  display: grid;
+  gap: $space-3;
+  margin-bottom: $space-5;
+}
+
+.contact-page__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-3;
+}

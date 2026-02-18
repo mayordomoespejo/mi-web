@@ -1,11 +1,16 @@
 const es = {
+  meta: {
+    pageTitle: "Miguel Mayordomo | Portfolio"
+  },
   common: {
-    brandName: "Miguel Mayordomo"
+    brandName: "miguel mayordomo espejo",
+    brandNameShort: "mme",
+    brandNamePart1: "iguel",
+    brandNamePart2: "ayordomo",
+    brandNamePart3: "spejo"
   },
   navbar: {
     home: "Inicio",
-    experience: "Experiencia",
-    education: "Formación",
     contact: "Contacto",
     openMenu: "Abrir menú",
     changeLanguage: "Cambiar idioma",
@@ -19,34 +24,56 @@ const es = {
   },
   home: {
     role: "Desarrollador Frontend / Mobile",
-    viewExperience: "Ver Experiencia",
-    viewEducation: "Ver Formación",
-    contact: "Contactar",
-    stackTitle: "Stack principal",
-    loadingStack: "Cargando stack...",
-    stackError: "No se pudo cargar el resumen.",
-    modalTitle: "Contactar",
-    writeMe: "Escríbeme a"
-  },
-  experience: {
-    title: "Experiencia",
-    tooltip:
-      "TanStack Query simplifica la sincronización de datos con caché, refetch y estados de carga/error de forma declarativa.",
-    refresh: "Refrescar",
-    loading: "Cargando experiencia...",
-    error: "Error al cargar experiencia.",
-    empty: "No hay experiencia disponible."
-  },
-  education: {
-    title: "Formación",
-    refresh: "Refrescar",
-    loading: "Cargando formación...",
-    error: "Error al cargar formación.",
-    empty: "No hay formación disponible."
+    sectionExperience: "Experiencia",
+    present: "Actualidad",
+    // Valores con los que se compara endDate para saber si el trabajo es actual (evita literales en el componente)
+    endDatePresentEs: "Actualidad",
+    endDatePresentEn: "Present",
+    sectionEducation: "Formación",
+    bio: "Desarrollador Frontend especializado en aplicaciones web y móviles multiplataforma, con sólida experiencia en React y React Native. Enfocado en el desarrollo de arquitecturas modernas, integración y consumo eficiente de APIs, automatización de procesos y aplicación de herramientas de inteligencia artificial para optimizar flujos de trabajo. Comprometido con la calidad del código, la escalabilidad de las soluciones y la mejora continua de la experiencia de usuario.",
+    bioHighlightPhrases: ["Desarrollador Frontend", "React Native", "React"],
+    scrollToNext: "Ir a la siguiente sección",
+    talk: "Hablemos",
+    talkOpen: "Abrir panel Hablemos",
+    talkClose: "Cerrar panel",
+    wheelPickerResponsibilitiesAria: "Responsabilidades",
+    education: {
+      dawIlerna: {
+        title: "Técnico Superior en Desarrollo de Aplicaciones Web",
+        center: "ILERNA FP",
+        dates: "Sept 2023 – Jun 2024"
+      },
+      bachRicardoOrtega: {
+        title: "Bachillerato Científico-Tecnológico",
+        center: "IES Ricardo Ortega",
+        dates: "Sept 2002 – Jun 2004"
+      }
+    },
+    experience: {
+      gyoza: {
+        role: "Desarrollador Frontend",
+        location: "Remoto",
+        responsibilities: [
+          "Desarrollo y mantenimiento de aplicaciones web y móviles con React y React Native",
+          "Implementación de formularios complejos con Formik y Yup",
+          "Integración con APIs REST y servicios externos",
+          "Gestión del estado global con Zustand",
+          "Sincronización y caché de datos con TanStack Query",
+          "Maquetación con HTML5, CSS3 y SCSS",
+          "Automatización de flujos con n8n",
+          "Uso de herramientas de IA para refactorización y productividad (Cursor, OpenAI)",
+          "Control de versiones con Git y GitHub",
+          "Trabajo en equipo bajo metodologías ágiles"
+        ]
+      }
+    }
   },
   contact: {
     title: "Contacto",
+    phone: "Teléfono",
     email: "Email",
+    github: "GitHub",
+    linkedin: "LinkedIn",
     copyEmail: "Copiar email",
     openModal: "Abrir modal",
     modalTitle: "Contacto",
@@ -54,15 +81,15 @@ const es = {
     copySuccess: "Email copiado",
     copyError: "No se pudo copiar el email"
   },
+  footer: {
+    credit: "{{year}} · Miguel Mayordomo Espejo"
+  },
   notFound: {
     message: "Página no encontrada.",
     backHome: "Volver a Inicio"
   },
   modal: {
     close: "Cerrar modal"
-  },
-  tooltip: {
-    info: "Información"
   }
 };
 

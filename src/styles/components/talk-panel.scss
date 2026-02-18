@@ -1,0 +1,137 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+// Wrapper: fills the layout slot, anchored to the top-right corner
+.talk-panel {
+  flex-shrink: 0;
+  position: relative;
+  height: var(--layout-panel-height, 80px);
+  min-height: 80px;
+
+  // Body: only grows downward, fixed width
+  &__body {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: $color-text;
+    padding-block: $space-3;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    box-sizing: border-box;
+    cursor: pointer;
+    overflow: hidden;
+    z-index: 20;
+    gap: $space-2;
+    transition: height $transition-slow;
+    will-change: height;
+
+    @media (max-width: 767px) {
+      padding-inline: $layout-padding-horizontal;
+    }
+
+    @include up(md) {
+      padding-inline: $space-4;
+    }
+  }
+
+  // Contact links: in the flex flow, separated from the "let's talk" label
+  &__contacts {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: $space-2;
+    margin-bottom: $space-2;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease 0s;
+
+    a {
+      font-family: $font-code;
+      font-size: 1rem;
+      font-weight: 600;
+      color: $color-primary;
+      text-decoration: none;
+      text-align: right;
+      padding: $space-2 0;
+      transition:
+        color $transition-base,
+        transform $transition-fast,
+        opacity $transition-fast;
+
+      &:active {
+        transform: scale(0.96);
+        opacity: 0.85;
+      }
+    }
+  }
+
+  &__body--expanded &__contacts {
+    opacity: 1;
+    pointer-events: auto;
+    transition-delay: 0.15s;
+  }
+
+  &--experience &__contacts a {
+    color: $color-secondary;
+  }
+
+  &__text {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: $color-primary;
+    letter-spacing: 0.02em;
+    transition: color $transition-base;
+  }
+
+  &--experience &__text {
+    color: $color-secondary;
+  }
+
+  // Drag handle: wide touch target at the bottom-left corner
+  &__drag-handle {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    cursor: grab;
+    touch-action: none;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding: 1px;
+
+    &:active {
+      cursor: grabbing;
+    }
+  }
+
+  &__arrow {
+    width: 1rem;
+    height: 1rem;
+    color: $color-primary;
+    transition:
+      color $transition-base,
+      transform $transition-slow;
+    transform: rotate(135deg);
+    pointer-events: none;
+
+    svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &__body--expanded &__arrow {
+    transform: rotate(-45deg);
+  }
+
+  &--experience &__arrow {
+    color: $color-secondary;
+  }
+}

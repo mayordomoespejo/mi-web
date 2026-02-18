@@ -1,14 +1,11 @@
-@use "../variables" as *;
+@use "sass:math";
+@use "../abstracts/variables" as *;
 
-// Variables solo de esta pantalla (animaciones welcome)
-$ease-out-smooth: cubic-bezier(0.16, 1, 0.3, 1);
-$welcome-letter-duration: 4200ms;
-$welcome-letter-delay-1: 80ms;
-$welcome-letter-delay-2: 420ms;
-$welcome-letter-delay-3: 760ms;
-$welcome-subtitle-fade-duration: 3s;
-$welcome-subtitle-fade-delay: 4s;
-$welcome-subtitle-fade-scale-start: 0.88;
+// Animation timing: all in CSS for performance; JS only toggles --closing modifier
+$welcome-bg-enter-duration: 0s;
+$welcome-enter-rotate-duration: 4.5s;
+$welcome-close-rotate-duration: 0.5s;
+$welcome-close-total-duration: 0.75s;
 
 .welcome-screen {
   position: fixed;
@@ -20,17 +17,20 @@ $welcome-subtitle-fade-scale-start: 0.88;
   align-content: center;
   padding: $space-6;
   color: $color-brand-text;
-  background: $color-brand;
+  background: $color-bg;
+  opacity: 0;
+  animation: welcome-bg-enter $welcome-bg-enter-duration ease-out forwards;
+
+  &.welcome-screen--closing {
+    animation: welcome-screen-fade-out $welcome-close-total-duration ease-out forwards;
+  }
 }
 
-/* Todo el branding es clickable (letras + subtítulo) */
 .welcome-screen__branding {
   position: relative;
   display: inline-flex;
   flex-direction: column;
   align-items: center;
-  width: fit-content;
-  height: fit-content;
   margin: 0;
   padding: 0;
   border: 0;
@@ -39,6 +39,7 @@ $welcome-subtitle-fade-scale-start: 0.88;
   font: inherit;
   cursor: pointer;
   text-align: inherit;
+  perspective: 1600px;
 
   &:focus-visible {
     outline: 2px solid $color-brand-text;
@@ -50,49 +51,34 @@ $welcome-subtitle-fade-scale-start: 0.88;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: fit-content;
-  height: fit-content;
-  perspective: 1800px;
   transform-style: preserve-3d;
+  will-change: transform;
+  animation: welcome-letter-block-enter $welcome-enter-rotate-duration $ease-out-smooth
+    forwards;
+  animation-delay: $welcome-bg-enter-duration;
+
+  .welcome-screen--closing & {
+    animation-delay: 0s;
+    animation: welcome-letter-exit-left $welcome-close-rotate-duration ease-in forwards;
+  }
 }
 
 .welcome-screen__letter {
   display: inline-block;
-  width: fit-content;
-  height: fit-content;
   font-family: $font-main;
   font-size: clamp(7rem, 29vw, 22rem);
   line-height: 0.85;
   font-weight: 700;
   letter-spacing: -0.05em;
-  opacity: 0;
+  opacity: 1;
   transform-style: preserve-3d;
-  transition: color 0.5s ease, -webkit-text-fill-color 0.5s ease, -webkit-text-stroke 0.5s ease;
-  /* Estado inicial desde variables (punto de salida aleatorio inyectado por JS) */
-  transform: translate3d(var(--start-x, -50vw), var(--start-y, -30vh), var(--start-z, -120px))
-    scale(var(--start-scale, 0.35))
-    rotateX(var(--start-rotate-x, 0deg))
-    rotateY(var(--start-rotate-y, 0deg))
-    rotateZ(var(--start-rotate-z, 0deg));
-  animation-duration: $welcome-letter-duration;
-  animation-fill-mode: forwards;
-  animation-name: letter-enter;
-  animation-timing-function: $ease-out-smooth;
+  transition:
+    color 0.5s ease,
+    -webkit-text-fill-color 0.5s ease,
+    -webkit-text-stroke 0.5s ease;
+  transform: translate3d(0, 0, 0) scale(1) rotateX(0) rotateY(0) rotateZ(0);
 }
 
-.welcome-screen__letter--m-left {
-  animation-delay: $welcome-letter-delay-1;
-}
-
-.welcome-screen__letter--m-right {
-  animation-delay: $welcome-letter-delay-2;
-}
-
-.welcome-screen__letter--e {
-  animation-delay: $welcome-letter-delay-3;
-}
-
-/* Hover/focus en branding: las tres "mme" pasan a solo borde */
 .welcome-screen__branding:hover .welcome-screen__letter,
 .welcome-screen__branding:focus-visible .welcome-screen__letter {
   color: transparent;
@@ -109,46 +95,72 @@ $welcome-subtitle-fade-scale-start: 0.88;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   text-align: center;
-  opacity: 0;
-  transition: transform 180ms ease;
-  animation: subtitle-fade $welcome-subtitle-fade-duration $ease-out-smooth forwards;
-  animation-delay: $welcome-subtitle-fade-delay;
-}
+  transform-style: preserve-3d;
+  will-change: transform;
+  animation: welcome-subtitle-enter-right $welcome-enter-rotate-duration $ease-out-smooth
+    forwards;
+  animation-delay: $welcome-bg-enter-duration;
 
-/* Una sola animación: punto de salida desde variables CSS (aleatorio por letra desde JS) */
-@keyframes letter-enter {
-  0% {
-    opacity: 0;
-    transform: translate3d(var(--start-x, -50vw), var(--start-y, -30vh), var(--start-z, -120px))
-      scale(var(--start-scale, 0.35))
-      rotateX(var(--start-rotate-x, 0deg))
-      rotateY(var(--start-rotate-y, 0deg))
-      rotateZ(var(--start-rotate-z, 0deg));
-  }
-  100% {
+  .welcome-screen--closing & {
     opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1) rotateX(0) rotateY(0) rotateZ(0);
+    animation-delay: 0s;
+    animation: welcome-subtitle-exit-right $welcome-close-rotate-duration ease-in forwards;
   }
 }
 
-@keyframes subtitle-fade {
+@keyframes welcome-bg-enter {
   from {
     opacity: 0;
-    transform: scale($welcome-subtitle-fade-scale-start);
   }
   to {
     opacity: 1;
-    transform: scale(1);
   }
 }
 
-@media (max-width: 640px) {
-  .welcome-screen {
-    gap: $space-4;
+@keyframes welcome-letter-block-enter {
+  from {
+    transform: rotateY(-90deg);
   }
+  to {
+    transform: rotateY(0deg);
+  }
+}
 
-  .welcome-screen__subtitle {
-    letter-spacing: 0.2em;
-    text-align: center;
+@keyframes welcome-subtitle-enter-right {
+  from {
+    transform: rotateY(90deg);
+  }
+  to {
+    transform: rotateY(0deg);
+  }
+}
+
+@keyframes welcome-letter-exit-left {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(-90deg);
+  }
+}
+
+@keyframes welcome-subtitle-exit-right {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(90deg);
+  }
+}
+
+@keyframes welcome-screen-fade-out {
+  0% {
+    opacity: 1;
+  }
+  #{math.div($welcome-close-rotate-duration, $welcome-close-total-duration) * 100%} {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }

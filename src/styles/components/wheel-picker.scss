@@ -1,0 +1,86 @@
+@use "../abstracts/variables" as *;
+
+// ─── Container / wheel viewport ─────────────────────────────────────────────
+// 248px: the active item is centered and ±2 neighbors are visible;
+// ±3 items fall outside the overflow:hidden clip.
+.wheel-picker {
+  position: relative;
+  height: 248px;
+  overflow: hidden;
+  outline: none;
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+// ─── Each item simulated on the cylinder surface ────────────────────────────
+.wheel-picker__item {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 44px; // matches WHEEL_PICKER_ITEM_HEIGHT in core/constants
+  display: flex;
+  align-items: center;
+  padding-left: 1.4rem;
+  font-size: 0.85rem;
+  line-height: 1.3;
+  padding-right: $space-3;
+  will-change: transform, opacity;
+}
+
+// ─── Fixed arrow (slot-machine style) ───────────────────────────────────────
+// Positioned to the left of the selector; rotates with wheel physics.
+.wheel-picker__arrow {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  z-index: 4;
+  color: $color-primary;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  transform-origin: 30% 50%; // pivots near the base, not the center
+
+  svg {
+    height: 12px;
+    width: auto;
+  }
+}
+
+// ─── Fade gradients: hide neighbors, only the active item fully visible ─────
+// Generous size (60px) so the fade starts well before the neighbor item.
+.wheel-picker__fade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 60px;
+  pointer-events: none;
+  z-index: 2;
+
+  &--top {
+    top: 0;
+    background: linear-gradient(to bottom, $color-secondary, transparent);
+  }
+
+  &--bottom {
+    bottom: 0;
+    background: linear-gradient(to top, $color-secondary, transparent);
+  }
+}
+
+// ─── Selection lines framing the active item (iOS picker style) ─────────────
+.wheel-picker__selector {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 44px;
+  transform: translateY(-50%);
+  border-top: 1px solid $color-quaternary;
+  border-bottom: 1px solid $color-quaternary;
+  pointer-events: none;
+  z-index: 3;
+}
