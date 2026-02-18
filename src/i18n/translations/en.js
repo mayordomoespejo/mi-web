@@ -70,6 +70,7 @@ const en = {
   },
   contact: {
     title: "Contact",
+    phone: "Phone",
     email: "Email",
     github: "GitHub",
     linkedin: "LinkedIn",

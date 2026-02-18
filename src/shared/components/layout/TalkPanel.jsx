@@ -1,21 +1,13 @@
 import { forwardRef, useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import ChevronRightIcon from "@/shared/components/ui/icons/ChevronRightIcon";
+import { CONTACT_LINKS } from "@/core/constants";
 
-const EXPANDED_MAX_WIDTH = 400;
-const EXPANDED_MAX_HEIGHT = 300;
 const SNAP_THRESHOLD = 0.4;
 
-function getExpandedSize() {
-  return {
-    width: Math.min(EXPANDED_MAX_WIDTH, window.innerWidth * 0.5),
-    height: Math.min(EXPANDED_MAX_HEIGHT, window.innerHeight * 0.5),
-  };
-}
-
 /**
- * Panel "Hablemos": esquina superior derecha anclada.
- * Click o drag desde la esquina del icono para expandir/colapsar.
+ * Panel "Hablemos": se despliega solo hacia abajo mostrando contactos.
+ * Click o drag vertical desde la esquina del icono para expandir/colapsar.
  */
 const TalkPanel = forwardRef(function TalkPanel(
   { widthPx = null, isExperienceAtPanel = false },
@@ -37,11 +29,45 @@ const TalkPanel = forwardRef(function TalkPanel(
     [ref]
   );
 
-  const toggle = useCallback(() => {
-    setIsExpanded((prev) => !prev);
+  /** Altura expandida = altura natural del body con todo su contenido */
+  const getExpandedHeight = useCallback(() => {
+    const body = bodyRef.current;
+    if (!body) return 250;
+    // Con justify-content: flex-end el overflow es negativo (arriba),
+    // así que scrollHeight no lo mide. Medimos con height: auto temporalmente.
+    const prev = body.style.height;
+    const prevTransition = body.style.transition;
+    body.style.transition = "none";
+    body.style.height = "auto";
+    const natural = body.offsetHeight;
+    body.style.height = prev;
+    body.style.transition = prevTransition;
+    // Forzar reflow para que no haya parpadeo
+    void body.offsetHeight;
+    return natural;
   }, []);
 
-  // --- Drag handlers (on the arrow drag-handle) ---
+  const toggle = useCallback(() => {
+    const body = bodyRef.current;
+    const wrapper = wrapperRef.current;
+    if (!body || !wrapper) return;
+
+    const from = body.offsetHeight;
+    const to = isExpanded ? wrapper.offsetHeight : getExpandedHeight();
+
+    // Fijar altura actual en px, desactivar transición para forzar el punto de partida
+    body.style.transition = "none";
+    body.style.height = `${from}px`;
+    // Forzar reflow para que el navegador registre el punto de partida
+    void body.offsetHeight;
+    // Re-activar transición y animar al target
+    body.style.transition = "";
+    body.style.height = `${to}px`;
+
+    setIsExpanded(!isExpanded);
+  }, [isExpanded, getExpandedHeight]);
+
+  // --- Drag handlers (solo vertical) ---
 
   const handlePointerDown = useCallback((e) => {
     e.preventDefault();
@@ -53,12 +79,9 @@ const TalkPanel = forwardRef(function TalkPanel(
 
     e.currentTarget.setPointerCapture(e.pointerId);
 
-    const rect = body.getBoundingClientRect();
     dragRef.current = {
-      startX: e.clientX,
       startY: e.clientY,
-      startWidth: rect.width,
-      startHeight: rect.height,
+      startHeight: body.getBoundingClientRect().height,
       moved: false,
     };
 
@@ -73,22 +96,15 @@ const TalkPanel = forwardRef(function TalkPanel(
 
     drag.moved = true;
 
-    const deltaX = e.clientX - drag.startX;
     const deltaY = e.clientY - drag.startY;
-
-    const expanded = getExpandedSize();
-    const minW = wrapper.offsetWidth;
     const minH = wrapper.offsetHeight;
+    const maxH = getExpandedHeight();
+    const newH = Math.max(minH, Math.min(maxH, drag.startHeight + deltaY));
 
-    // Arrastrar a la izquierda aumenta el ancho; arrastrar abajo aumenta el alto
-    const newW = Math.max(minW, Math.min(expanded.width, drag.startWidth - deltaX));
-    const newH = Math.max(minH, Math.min(expanded.height, drag.startHeight + deltaY));
-
-    body.style.width = `${newW}px`;
     body.style.height = `${newH}px`;
-  }, []);
+  }, [getExpandedHeight]);
 
-  const handlePointerUp = useCallback((e) => {
+  const handlePointerUp = useCallback(() => {
     const drag = dragRef.current;
     const body = bodyRef.current;
     const wrapper = wrapperRef.current;
@@ -96,47 +112,24 @@ const TalkPanel = forwardRef(function TalkPanel(
 
     dragRef.current = null;
 
-    // Sin movimiento → es un click, toggle
     if (!drag.moved) {
       body.style.transition = "";
-      body.style.width = "";
-      body.style.height = "";
-      setIsExpanded((prev) => !prev);
+      toggle();
       return;
     }
 
-    // Calcular progreso para decidir snap
-    const currentW = body.offsetWidth;
     const currentH = body.offsetHeight;
-
-    const expanded = getExpandedSize();
-    const minW = wrapper.offsetWidth;
     const minH = wrapper.offsetHeight;
-
-    const rangeW = expanded.width - minW || 1;
-    const rangeH = expanded.height - minH || 1;
-    const progress = Math.max(
-      (currentW - minW) / rangeW,
-      (currentH - minH) / rangeH
-    );
+    const maxH = getExpandedHeight();
+    const progress = (currentH - minH) / (maxH - minH || 1);
     const shouldExpand = progress > SNAP_THRESHOLD;
 
-    // Mantener tamaño actual inline y re-activar transiciones
-    body.style.width = `${currentW}px`;
-    body.style.height = `${currentH}px`;
+    // Re-activar transición y animar al target
     body.style.transition = "";
+    body.style.height = `${shouldExpand ? maxH : minH}px`;
 
     setIsExpanded(shouldExpand);
-
-    // Doble rAF para que React aplique la clase antes de quitar los inline styles
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        if (!bodyRef.current) return;
-        bodyRef.current.style.width = "";
-        bodyRef.current.style.height = "";
-      });
-    });
-  }, []);
+  }, [toggle, getExpandedHeight]);
 
   const wrapperStyle = widthPx != null ? { width: `${widthPx}px` } : undefined;
   const experienceClass = isExperienceAtPanel ? " talk-panel--experience" : "";
@@ -163,7 +156,7 @@ const TalkPanel = forwardRef(function TalkPanel(
         aria-expanded={isExpanded}
         aria-label={isExpanded ? t("home.talkClose") : t("home.talkOpen")}
       >
-        {/* Drag handle: zona amplia en la esquina del icono */}
+        {/* Drag handle */}
         <div
           className="talk-panel__drag-handle"
           onPointerDown={handlePointerDown}
@@ -173,6 +166,27 @@ const TalkPanel = forwardRef(function TalkPanel(
         >
           <ChevronRightIcon className="talk-panel__arrow" />
         </div>
+
+        {/* Contactos */}
+        <nav
+          className="talk-panel__contacts"
+          aria-label={t("contact.title")}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <a href={CONTACT_LINKS.phone}>
+            {t("contact.phone")}
+          </a>
+          <a href={CONTACT_LINKS.email}>
+            {t("contact.email")}
+          </a>
+          <a href={CONTACT_LINKS.linkedin} target="_blank" rel="noreferrer">
+            {t("contact.linkedin")}
+          </a>
+          <a href={CONTACT_LINKS.github} target="_blank" rel="noreferrer">
+            {t("contact.github")}
+          </a>
+        </nav>
+
         <span className="talk-panel__text">{talkText}</span>
       </div>
     </div>

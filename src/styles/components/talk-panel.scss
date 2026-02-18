@@ -8,7 +8,7 @@
   height: var(--layout-panel-height, 80px);
   min-height: 80px;
 
-  // Body: se posiciona desde top-right y crece hacia la izquierda y abajo
+  // Body: solo crece hacia abajo, ancho fijo
   &__body {
     position: absolute;
     top: 0;
@@ -25,9 +25,8 @@
     cursor: pointer;
     overflow: hidden;
     z-index: 20;
-    transition:
-      width 0.35s ease,
-      height 0.35s ease;
+    gap: $space-2;
+    transition: height 0.35s ease;
 
     @media (max-width: 767px) {
       padding-inline: $layout-padding-horizontal;
@@ -36,11 +35,44 @@
     @include up(md) {
       padding-inline: $space-4;
     }
+  }
 
-    &--expanded {
-      width: min(400px, 50vw);
-      height: min(300px, 50vh);
+  // Links de contacto: en el flujo flex, separados del "hablemos"
+  &__contacts {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: $space-2;
+    margin-bottom: $space-2;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease 0s;
+
+    a {
+      font-family: $font-code;
+      font-size: 1rem;
+      font-weight: 600;
+      color: $color-primary;
+      text-decoration: none;
+      text-align: right;
+      padding: $space-2 0;
+      transition: color 0.2s ease, transform 0.12s ease-out, opacity 0.12s ease-out;
+
+      &:active {
+        transform: scale(0.96);
+        opacity: 0.85;
+      }
     }
+  }
+
+  &__body--expanded &__contacts {
+    opacity: 1;
+    pointer-events: auto;
+    transition-delay: 0.15s;
+  }
+
+  &--experience &__contacts a {
+    color: $color-secondary;
   }
 
   &__text {
