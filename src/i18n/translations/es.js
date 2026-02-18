@@ -33,6 +33,7 @@ const es = {
     bio: "Desarrollador Frontend especializado en aplicaciones web y móviles multiplataforma, con sólida experiencia en React y React Native. Enfocado en el desarrollo de arquitecturas modernas, integración y consumo eficiente de APIs, automatización de procesos y aplicación de herramientas de inteligencia artificial para optimizar flujos de trabajo. Comprometido con la calidad del código, la escalabilidad de las soluciones y la mejora continua de la experiencia de usuario.",
     bioHighlightPhrases: ["Desarrollador Frontend", "React Native", "React"],
     scrollToNext: "Ir a la siguiente sección",
+    talk: "Hablemos",
     wheelPickerResponsibilitiesAria: "Responsabilidades",
     education: {
       dawIlerna: {

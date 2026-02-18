@@ -1,7 +1,7 @@
 @use "../abstracts/variables" as *;
 
 .footer {
-  border-top: 1px solid $color-border;
+  border-top: 1px solid $color-text;
   background: $color-header-footer;
 }
 
@@ -10,6 +10,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: $color-muted;
+  color: $color-text;
   font-family: $font-code;
 }

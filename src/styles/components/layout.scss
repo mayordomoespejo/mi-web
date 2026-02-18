@@ -34,6 +34,43 @@
   background: $color-secondary;
 }
 
+// Fila de paneles: stepped a la izquierda, talk-panel a la derecha, misma altura
+.layout__header .container.layout__panel-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: $space-4;
+}
+
+// Panel "Hablemos": fondo texto, mismo alto que stepped, ancho = actions-inner (desde JS)
+.talk-panel {
+  flex-shrink: 0;
+  min-height: 80px; // Igual que --panel-min-height del stepped-panel
+  background: $color-text;
+  padding-block: $space-3;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  box-sizing: border-box;
+
+  @media (max-width: 767px) {
+    padding-inline: $layout-padding-horizontal;
+  }
+
+  @include up(md) {
+    padding-inline: $space-4;
+  }
+
+  &__text {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: $color-primary;
+    letter-spacing: 0.02em;
+  }
+}
+
 .layout__main {
   flex: 1;
   min-height: 0;

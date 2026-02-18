@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState, useCallback } from "react";
+import { useMemo, useRef, useState, useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
@@ -9,6 +9,18 @@ import {
   WAVE_BARS_PEAK_WEIGHT,
   WAVE_BARS_SIGMA
 } from "@/core/constants";
+
+/**
+ * Returns the width in pixels of the wave-bars actions inner block (the one with
+ * "Experiencia" / "Formación"). Measures the actual rendered element so it stays
+ * correct when labels, font or padding change.
+ * @param {HTMLElement | null} element - The element with class "wave-bars__actions-inner"
+ * @returns {number | null} Width in px, or null if element is missing
+ */
+export function getActionsInnerWidth(element) {
+  if (!element || typeof element.getBoundingClientRect !== "function") return null;
+  return element.getBoundingClientRect().width;
+}
 
 const WAVE_SECTIONS = [
   { id: HOME_SECTION_IDS.EXPERIENCE, labelKey: "home.sectionExperience" },
@@ -38,12 +50,34 @@ function getPointerBarIndex(clientY, rectHeight, rectTop) {
 /**
  * Cabecera con barras animadas que reaccionan al puntero y botones de scroll a las secciones de la home.
  * Si el usuario está en otra página, navega a la home y le indica la sección a la que ir.
+ * @param {((widthPx: number | null) => void)} [onActionsInnerWidthChange] - Callback con el ancho en px del bloque de acciones (para alinear otros elementos).
  * @returns {JSX.Element}
  */
-export default function WaveBars() {
+export default function WaveBars({ onActionsInnerWidthChange }) {
   const containerRef = useRef(null);
+  const actionsInnerRef = useRef(null);
   const [mouseBarIndex, setMouseBarIndex] = useState(null);
+  const [actionsInnerWidthPx, setActionsInnerWidthPx] = useState(null);
   const { t } = useTranslation();
+
+  // Recalculate actions-inner width when the element mounts, labels change, or container resizes
+  useEffect(() => {
+    const el = actionsInnerRef.current;
+    if (!el) return;
+
+    const updateWidth = () => {
+      const width = getActionsInnerWidth(el);
+      setActionsInnerWidthPx(width);
+      onActionsInnerWidthChange?.(width ?? null);
+    };
+
+    updateWidth();
+
+    const resizeObserver = new ResizeObserver(updateWidth);
+    resizeObserver.observe(el);
+
+    return () => resizeObserver.disconnect();
+  }, [t("home.sectionExperience"), t("home.sectionEducation"), onActionsInnerWidthChange]);
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
@@ -88,7 +122,7 @@ export default function WaveBars() {
         ))}
       </div>
       <div className="wave-bars__actions">
-        <div className="wave-bars__actions-inner">
+        <div ref={actionsInnerRef} className="wave-bars__actions-inner">
           <div
             className="wave-bars__block"
             role="group"

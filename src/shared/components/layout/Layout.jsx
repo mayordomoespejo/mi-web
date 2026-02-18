@@ -35,9 +35,10 @@ function useLayoutHeights(layoutRef) {
 export default function Layout() {
   const layoutRef = useRef(null);
   const { headerRef, wavebarRef, panelRef } = useLayoutHeights(layoutRef);
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const { pathname } = useLocation();
   const [isExperienceActive, setIsExperienceActive] = useState(false);
+  const [actionsInnerWidthPx, setActionsInnerWidthPx] = useState(null);
 
   useEffect(() => {
     document.title = i18n.t("meta.pageTitle");
@@ -74,10 +75,16 @@ export default function Layout() {
           ref={wavebarRef}
           className={`layout__wavebar${isExperienceActive ? " layout__wavebar--experience" : ""}`}
         >
-          <WaveBars />
+          <WaveBars onActionsInnerWidthChange={setActionsInnerWidthPx} />
         </div>
-        <div ref={panelRef} className="container">
+        <div ref={panelRef} className="container layout__panel-row">
           <SteppedPanel />
+          <div
+            className="talk-panel"
+            style={actionsInnerWidthPx != null ? { width: `${actionsInnerWidthPx}px` } : undefined}
+          >
+            <span className="talk-panel__text">{t("home.talk")}</span>
+          </div>
         </div>
       </header>
       <main className="layout__main">

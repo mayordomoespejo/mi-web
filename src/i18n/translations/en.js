@@ -33,6 +33,7 @@ const en = {
     bio: "Frontend Developer specialised in web and cross-platform mobile applications, with solid experience in React and React Native. Focused on modern architecture development, API integration and efficient consumption, process automation and the use of AI tools to optimise workflows. Committed to code quality, solution scalability and continuous improvement of the user experience.",
     bioHighlightPhrases: ["Frontend Developer", "React Native", "React"],
     scrollToNext: "Go to next section",
+    talk: "Let's talk",
     wheelPickerResponsibilitiesAria: "Responsibilities",
     education: {
       dawIlerna: {
