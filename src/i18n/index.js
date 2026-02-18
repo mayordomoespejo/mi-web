@@ -30,7 +30,8 @@ i18n.use(initReactI18next).init({
   supportedLngs: supportedLanguages,
   interpolation: {
     escapeValue: false
-  }
+  },
+  showSupportNotice: false
 });
 
 i18n.on("languageChanged", (lng) => {

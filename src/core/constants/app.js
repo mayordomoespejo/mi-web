@@ -35,6 +35,17 @@ export const WHEEL_PICKER_ITEM_HEIGHT = 44;
 
 /** Home section IDs for scroll / WaveBars navigation. */
 export const HOME_SECTION_IDS = {
+  INTRO: "home-intro",
   EXPERIENCE: "home-experience",
   EDUCATION: "home-education"
 };
+
+/** Home section IDs in DOM order; used to resolve which section is "at" the wavebar when several intersect. */
+export const HOME_WAVEBAR_SECTION_IDS = [
+  HOME_SECTION_IDS.INTRO,
+  HOME_SECTION_IDS.EXPERIENCE,
+  HOME_SECTION_IDS.EDUCATION
+];
+
+/** Section that gets a different wavebar color; all others use default (bg). */
+export const WAVEBAR_SPECIAL_SECTION_ID = HOME_SECTION_IDS.EXPERIENCE;

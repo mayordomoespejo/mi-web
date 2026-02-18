@@ -1,6 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import {
+  HOME_WAVEBAR_SECTION_IDS,
+  WAVEBAR_SPECIAL_SECTION_ID,
+  HOME_SECTION_IDS
+} from "@/core/constants";
 import { useLayoutHeights, useScrollSpy } from "@/shared/hooks";
 import WaveBars from "./WaveBars";
 import SteppedPanel from "./SteppedPanel";
@@ -15,12 +20,16 @@ export default function Layout() {
   const [actionsInnerWidthPx, setActionsInnerWidthPx] = useState(null);
   const talkPanelRef = useRef(null);
 
-  const { isAtWavebar, isAtTalkPanel } = useScrollSpy(
-    "home-experience",
+  const { sectionAtWavebar, isAtTalkPanel } = useScrollSpy(
+    HOME_WAVEBAR_SECTION_IDS,
+    HOME_SECTION_IDS.EXPERIENCE,
     pathname,
     wavebarRef,
     talkPanelRef
   );
+
+  const isSpecialWavebarSection = sectionAtWavebar === WAVEBAR_SPECIAL_SECTION_ID;
+  const wavebarClassName = `layout__wavebar${isSpecialWavebarSection ? " layout__wavebar--alt" : ""}`;
 
   useEffect(() => {
     document.title = i18n.t("meta.pageTitle");
@@ -29,10 +38,7 @@ export default function Layout() {
   return (
     <div ref={layoutRef} className="layout">
       <header ref={headerRef} className="layout__header">
-        <div
-          ref={wavebarRef}
-          className={`layout__wavebar${isAtWavebar ? " layout__wavebar--experience" : ""}`}
-        >
+        <div ref={wavebarRef} className={wavebarClassName}>
           <WaveBars onActionsInnerWidthChange={setActionsInnerWidthPx} />
         </div>
         <div ref={panelRef} className="container layout__panel-row">

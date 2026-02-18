@@ -26,15 +26,15 @@
   background: transparent;
 }
 
-.layout__wavebar--experience .wave-bars {
+/* Wavebar alternative color (used when WAVEBAR_SPECIAL_SECTION_ID is at wavebar) */
+.layout__wavebar--alt .wave-bars {
   background: $color-secondary;
 }
 
-.layout__wavebar--experience .wave-bars__block {
+.layout__wavebar--alt .wave-bars__block {
   background: $color-secondary;
 }
 
-// Fila de paneles: stepped a la izquierda, talk-panel a la derecha, misma altura
 .layout__header .container.layout__panel-row {
   display: flex;
   flex-direction: row;
