@@ -54,17 +54,27 @@
   z-index: -1;
 }
 
+/* Misma estructura que intro (ancho); alto como experience (viewport − header + panel + espacio) */
 .home-page__education {
   position: relative;
   flex-shrink: 0;
-  min-height: calc(100dvh - var(--layout-header-height, 0px) + var(--layout-panel-height, 84.75px) + #{$space-5});
   min-height: calc(100vh - var(--layout-header-height, 0px) + var(--layout-panel-height, 84.75px) + #{$space-5});
+  min-height: calc(100dvh - var(--layout-header-height, 0px) + var(--layout-panel-height, 84.75px) + #{$space-5});
   width: 100%;
   box-sizing: border-box;
-  padding-inline: $layout-padding-horizontal;
-  padding-top: var(--layout-header-height, 0px);
+  display: flex;
+  flex-direction: column;
   padding-bottom: calc(#{$space-7} * 2);
   scroll-margin-top: var(--layout-wavebar-height, 0px);
+}
+
+/* Misma idea que intro-inner: ocupa todo el alto y empuja el contenido (cards) hacia abajo */
+.home-page__education-inner {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
 .home-page__education::before {

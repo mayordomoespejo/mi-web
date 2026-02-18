@@ -1,7 +1,12 @@
 @use "../../abstracts/variables" as *;
 
 .education-section {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: $space-5;
   width: 100%;
   font-family: $font-code;
-  padding-block: $space-8 $space-12;
 }

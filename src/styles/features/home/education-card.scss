@@ -1,11 +1,14 @@
 @use "../../abstracts/variables" as *;
 
 .education-card {
+  display: flex;
+  flex-direction: column;
   position: relative;
+  font-family: $font-code;
   background-color: $color-bg;
-  min-height: 80vh;
-  padding: $space-8 $space-6 $space-12;
+  padding: $space-8;
   border-radius: $radius-lg;
+  gap: $space-5;
   transition:
     box-shadow 0.35s ease,
     transform 0.35s ease;
@@ -28,7 +31,6 @@
   align-items: baseline;
   gap: $space-6;
   flex-wrap: wrap;
-  padding-bottom: $space-4;
 }
 
 .education-card__id {
@@ -37,10 +39,11 @@
   letter-spacing: 0.05em;
   color: $color-muted;
   flex-shrink: 0;
+  align-self: flex-start;
 }
 
 .education-card__title {
-  font-family: $font-main;
+  font-family: $font-code;
   font-size: clamp(1.5rem, 4vw, 2.5rem);
   font-weight: 700;
   color: $color-text;
@@ -51,25 +54,39 @@
 }
 
 .education-card__separator {
-  height: 0;
+  --separator-width: 2px;
+  --separator-segment-size: 4px;
+  --separator-gap-size: 4px;
+
+  height: var(--separator-width);
   border: none;
-  border-top: 1px dashed $color-border;
-  margin: 0 0 $space-6;
+  margin-inline: calc(-1 * $space-8);
+  margin-block: 0;
+  background: repeating-linear-gradient(
+    to right,
+    $color-tertiary 0,
+    $color-tertiary var(--separator-segment-size),
+    transparent var(--separator-segment-size),
+    transparent calc(var(--separator-segment-size) + var(--separator-gap-size))
+  );
 }
 
 .education-card__body {
-  max-width: 42rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: $space-2;
 }
 
 .education-card__center {
   font-size: 1rem;
   color: $color-text;
-  margin: 0 0 $space-2;
+  margin: 0;
   line-height: 1.4;
 }
 
 .education-card__dates {
   font-size: 0.875rem;
-  color: $color-quaternary;
-  margin: 0 0 $space-6;
+  color: $color-tertiary;
+  margin: 0;
 }
