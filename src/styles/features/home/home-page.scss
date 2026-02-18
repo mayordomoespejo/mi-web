@@ -38,6 +38,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-inline: $layout-padding-horizontal;
   scroll-margin-top: var(--layout-wavebar-height, 0px);
 }
 

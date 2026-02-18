@@ -1,14 +1,18 @@
 @use "../abstracts/variables" as *;
 
 // ─── Contenedor / ventana de la rueda ────────────────────────────────────────
-// 160px: el ítem activo queda centrado (80px) y los vecinos ±1 asoman
-// parcialmente; los ±2 quedan fuera del clip de overflow:hidden.
+// 248px: el ítem activo queda centrado y los vecinos ±2 asoman visibles;
+// los ±3 quedan fuera del clip de overflow:hidden.
 .wheel-picker {
   position: relative;
-  height: 160px;
+  height: 248px;
   overflow: hidden;
   outline: none;
-  cursor: ns-resize;
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
 }
 
 // ─── Cada ítem simulado en la superficie del cilindro ────────────────────────
@@ -20,21 +24,25 @@
   height: 44px; // matches WHEEL_PICKER_ITEM_HEIGHT in core/constants
   display: flex;
   align-items: center;
-  gap: $space-2;
+  padding-left: 1.4rem;
   font-size: 0.85rem;
   line-height: 1.3;
   padding-right: $space-3;
-  transition:
-    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-    opacity 0.3s ease;
   will-change: transform, opacity;
 }
 
-.wheel-picker__bullet {
+// ─── Flecha fija estilo "ruleta de la suerte" ────────────────────────────────
+// Se posiciona a la izquierda del selector y rota con la física de la rueda.
+.wheel-picker__arrow {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  z-index: 4;
   color: $color-primary;
-  font-size: 1.1rem;
-  flex-shrink: 0;
+  font-size: 1.3rem;
   line-height: 1;
+  pointer-events: none;
+  transform-origin: 30% 50%; // pivota cerca de la base, no del centro
 }
 
 // ─── Degradados: ocultan los vecinos dejando solo el ítem activo visible ──────
